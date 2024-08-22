@@ -1,92 +1,50 @@
-name: CI/CD
+name: CI/CD Pipeline
 
 on:
   push:
     branches:
       - main
-      - 'feature*'
-  pull_request:
-    branches:
-      - main
-      - 'feature*'
-  workflow_dispatch:
+      - dev
+      - feature/*
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    outputs:
-      build-path: ./build
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Cache Node modules
+        uses: actions/cache@v3
         with:
-          node-version: '18'
+          path: |
+            ~/.npm
+            node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build the project
+      - name: Build
         run: npm run build
 
-      - name: List build directory
-        run: ls -al ./build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-artifacts
-          path: ./build/
-
   deploy-dev:
-    runs-on: ubuntu-latest
     needs: build
-    environment: dev
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature')
+    if: github.ref != 'refs/heads/main' && success()
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
 
       - name: Deploy to Dev
-        run: echo "Deploying to Dev environment..."
-        env:
-          ENVIRONMENT: dev
-
-  deploy-prod:
-    runs-on: ubuntu-latest
-    needs: build
-    environment: prod
-    if: github.ref == 'refs/heads/main'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts
-
-      - name: Install Netlify CLI
-        run: npm install -g netlify-cli
-
-      - name: Deploy to Netlify
-        run: |
-          netlify deploy --prod --dir=./build --site=${{ secrets.NETLIFY_SITE_ID }}
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: echo "Deploying to Dev..." # Replace with your dev deploy script or command
 
   create-release:
-    runs-on: ubuntu-latest
     needs: build
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && success()
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -128,23 +86,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Ensure Build Artifact Exists
-        id: ensure_artifact
-        run: |
-          if [ ! -f ./build/movie-phobics.zip ]; then
-            mkdir -p ./build
-            echo "This is a build artifact" > ./build/movie-phobics.zip
-          fi
+  deploy-prod:
+    needs: create-release
+    if: github.ref == 'refs/heads/main' && success()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: List build directory before upload
-        run: ls -al ./build
+      - name: Install dependencies
+        run: npm install
 
-      - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/movie-phobics.zip
-          asset_name: movie-phobics.zip
-          asset_content_type: application/zip
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to Netlify
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: npx netlify deploy --prod --dir=build

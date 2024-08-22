@@ -23,13 +23,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'  # Adjust the Node.js version as required
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build the project
-        run: npm run build  # React apps typically use `npm run build`
+        run: npm run build
 
       - name: List build directory
         run: ls -al ./build
@@ -49,6 +49,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
       - name: Deploy to Dev
         run: echo "Deploying to Dev environment..."
         env:
@@ -63,13 +68,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
         with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
+          name: build-artifacts
 
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
@@ -125,17 +127,6 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Ensure Build Artifact Exists
-        id: ensure_artifact
-        run: |
-          if [ ! -f ./build/movie-phobics.zip ]; then
-            mkdir -p ./build
-            echo "This is a build artifact" > ./build/movie-phobics.zip
-          fi
-
-      - name: List build directory before upload
-        run: ls -al ./build
 
       - name: Upload Release Assets
         uses: actions/upload-release-asset@v1

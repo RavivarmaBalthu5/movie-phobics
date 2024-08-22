@@ -32,7 +32,7 @@ jobs:
 
   deploy-dev:
     needs: build
-    if: github.ref != 'refs/heads/main' && success()
+    if: startsWith(github.ref, 'refs/heads/feature/') || github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

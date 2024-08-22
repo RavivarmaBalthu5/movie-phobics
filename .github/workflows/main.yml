@@ -63,6 +63,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 

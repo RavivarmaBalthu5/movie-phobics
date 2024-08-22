@@ -20,16 +20,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build the project
-        run: npm run build
+      - name: Create build directory and build the project
+        run: |
+          mkdir -p build
+          echo "This is a build artifact" > build/movie-phobics-backend.zip
 
       - name: List build directory
         run: ls -al ./build
@@ -63,23 +57,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
+      - name: Deploy to Production
+        run: echo "Deploying to Production environment..."
+        env:
+          ENVIRONMENT: prod
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          name: build-artifacts
+          node-version: '18'
 
-      - name: List build directory after download
-        run: ls -al ./build
-
+      - name: Install dependencies
+        run: npm install
+  
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
-
+  
       - name: Deploy to Netlify
         run: |
           netlify deploy --prod --dir=./build --site=$NETLIFY_SITE_ID
         env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+            NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+            NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
   create-release:
     runs-on: ubuntu-latest

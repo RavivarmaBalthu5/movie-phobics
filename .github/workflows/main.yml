@@ -70,7 +70,6 @@ jobs:
 
       - name: List build directory after download
         run: ls -al ./build
-
       - name: Install Netlify CLI
         run: npm install -g netlify-cli
 

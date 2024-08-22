@@ -4,8 +4,7 @@ on:
   push:
     branches:
       - main
-      - dev
-      - feature/*
+      - feature*
 
 jobs:
   build:
@@ -22,7 +21,7 @@ jobs:
 
   deploy-dev:
     needs: build
-    if: startsWith(github.ref, 'refs/heads/feature/') || github.ref == 'refs/heads/dev'
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

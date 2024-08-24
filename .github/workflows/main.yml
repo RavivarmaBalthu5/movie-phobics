@@ -91,12 +91,13 @@ jobs:
           curl -X POST -d '{
             "commit_ref": "${{ env.TAG_VERSION }}",
             "tag": "${{ env.TAG_VERSION }}",
+            "branch" : "main",
             "title": "Manual Deploy from GitHub Actions",
             "message": "Deploy triggered manually from GitHub Actions"
           }' \
           -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
           -H "Content-Type: application/json" \
-          https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID/deploys
+          https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys
 
       - name: Deploy to Production
         run: echo "Deployed to Production..."

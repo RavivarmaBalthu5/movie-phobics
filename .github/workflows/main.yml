@@ -87,7 +87,9 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         run: |
-          curl -X POST -d '{}' \
+          curl -X POST -d '{
+           "branch" : "main"
+          }' \
           -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
           -H "Content-Type: application/json" \
           https://api.netlify.com/api/v1/sites/$NETLIFY_SITE_ID/deploys

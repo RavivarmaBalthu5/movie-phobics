@@ -12,7 +12,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
 
     // Separate trailers and other videos
     const trailers = videos.length > 0 ? videos.filter(video => video.type === 'Trailer') : videos;
-    const otherVideos = videos.length > 0 ? videos.filter(video => video.type !== 'Trailer') : videos;
+    // const otherVideos = videos.length > 0 ? videos.filter(video => video.type !== 'Trailer') : videos;
 
 
     return (
@@ -54,7 +54,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                             </div>
                         </div>
                     )}
-                    {otherVideos?.length > 0 && (
+                    {/* {otherVideos?.length > 0 && (
                         <div>
                             <h3>Other Videos</h3>
                             <div className="video-container">
@@ -63,7 +63,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                                         <iframe
                                             src={`${YOUTUBE_BASE_URL}/embed/${video?.key}`}
                                             frameBorder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media;"
                                             allowFullScreen
                                             title={video?.name}
 
@@ -72,7 +72,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                                 ))}
                             </div>
                         </div>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>

@@ -88,7 +88,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
         run: |          
-          BUILD_HOOK_URL="$NETLIFY_BUILD_HOOK_URL?trigger_branch=main&trigger_tag=$TAG&clear_cache=true"
+          BUILD_HOOK_URL="$NETLIFY_BUILD_HOOK_URL?trigger_branch=main&clear_cache=true"
           
           # Trigger the build hook
           curl -X POST "$BUILD_HOOK_URL" \

@@ -14,6 +14,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     const trailers = videos.length > 0 ? videos.filter(video => video.type === 'Trailer') : videos;
     const otherVideos = videos.length > 0 ? videos.filter(video => video.type !== 'Trailer') : videos;
 
+
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={handleContentClick}>
@@ -46,6 +47,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             title={video?.name}
+
                                         ></iframe>
                                     </div>
                                 ))}
@@ -64,6 +66,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             title={video?.name}
+
                                         ></iframe>
                                     </div>
                                 ))}

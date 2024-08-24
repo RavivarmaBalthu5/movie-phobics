@@ -9,6 +9,17 @@
   border-bottom: 2px solid #61dafb; /* Light blue border for styling */
 }
 
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-icon {
+  width: 40px; /* Size of the icon */
+  height: 40px; /* Size of the icon */
+  margin-right: 10px; /* Space between icon and title */
+}
+
 .header-title {
   font-size: 24px;
   font-weight: bold;

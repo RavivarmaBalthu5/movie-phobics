@@ -1,12 +1,15 @@
 // src/Header.js
 import React from 'react';
 import '../css/Header.css'; // Import the CSS file specific to the header
-
+import MovieIcon from '../assets/movie-phobics.svg'; // Import the SVG icon
 
 const Header = ({ searchQuery, onSearchChange, onSearchSubmit }) => {
     return (
         <header className="header">
-            <h1 className="header-title">Movie Phobics</h1>
+            <div className="header-content">
+                <img src={MovieIcon} alt="Movie Phobics Icon" className="header-icon" />
+                <h1 className="header-title">MOVIE PHOBICS</h1>
+            </div>
             <div className="search-container">
                 <input
                     type="text"
@@ -27,4 +30,3 @@ const Header = ({ searchQuery, onSearchChange, onSearchSubmit }) => {
 };
 
 export default Header;
-

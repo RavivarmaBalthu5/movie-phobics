@@ -32,14 +32,10 @@ const App = () => {
   };
 
   const handleOpenMovieDetails = async (movie) => {
-    try {
-      const videos = await fetchVideos(movie.id);
-      setVideoData(videos);
-      setSelectedMovie(movie);
-      setIsDetailsOpen(true);
-    } catch (error) {
-      console.error("Failed to fetch videos:", error);
-    }
+    const videos = await fetchVideos(movie.id);
+    setVideoData(videos);
+    setSelectedMovie(movie);
+    setIsDetailsOpen(true);
   };
 
   const handleCloseDetails = () => {

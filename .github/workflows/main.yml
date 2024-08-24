@@ -25,7 +25,7 @@ jobs:
 
   deploy-dev:
     needs: build
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature')
+    if: (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/feature') ) && success()
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -35,7 +35,7 @@ jobs:
         run: echo "Deployed to Dev..."
 
   create-release:
-    needs: build
+    needs: deploy-dev
     if: github.ref == 'refs/heads/main' && success()
     runs-on: ubuntu-latest
     steps:

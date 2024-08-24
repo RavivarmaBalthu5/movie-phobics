@@ -89,8 +89,8 @@ jobs:
         run: |          
           # Send a deployment request to Netlify
           curl -X POST -d '{
-            "commit_ref": ${{ env.TAG_VERSION }},
-            "tag": ${{ env.TAG_VERSION }},
+            "commit_ref": "${{ env.TAG_VERSION }}",
+            "tag": "${{ env.TAG_VERSION }}",
             "title": "Manual Deploy from GitHub Actions",
             "message": "Deploy triggered manually from GitHub Actions"
           }' \

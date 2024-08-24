@@ -86,13 +86,11 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          TAG="${{ github.event.inputs.tag }}"
-          
+        run: |          
           # Send a deployment request to Netlify
           curl -X POST -d '{
-            "commit_ref": "'"$TAG"'",
-            "tag": "'"$TAG"'",
+            "commit_ref": ${{ env.TAG_VERSION }},
+            "tag": ${{ env.TAG_VERSION }},
             "title": "Manual Deploy from GitHub Actions",
             "message": "Deploy triggered manually from GitHub Actions"
           }' \

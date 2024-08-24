@@ -5,6 +5,10 @@ on:
     branches:
       - main
       - feature*
+  pull_request: 
+    branches:
+      - main
+      - feature*
 
 jobs:
   build:
@@ -79,12 +83,14 @@ jobs:
     needs: create-release
     if: github.ref == 'refs/heads/main' && success()
     runs-on: ubuntu-latest
+    environment:
+      name: prod
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Install dependencies
-      #   run: npm install
+      - name: Install dependencies
+        run: npm install
 
       - name: Build
         run: npm run build

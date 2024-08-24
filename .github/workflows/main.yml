@@ -86,18 +86,13 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
         run: |          
-          # Send a deployment request to Netlify
-          curl -X POST -d '{
-            "commit_ref": "${{ env.TAG_VERSION }}",
-            "tag": "${{ env.TAG_VERSION }}",
-            "branch" : "main",
-            "title": "Manual Deploy from GitHub Actions",
-            "message": "Deploy triggered manually from GitHub Actions"
-          }' \
-          -H "Authorization: Bearer $NETLIFY_AUTH_TOKEN" \
-          -H "Content-Type: application/json" \
-          https://api.netlify.com/api/v1/sites/${{ secrets.NETLIFY_SITE_ID }}/deploys
+          BUILD_HOOK_URL="$NETLIFY_BUILD_HOOK_URL?trigger_branch=main&trigger_tag=$TAG&clear_cache=true"
+          
+          # Trigger the build hook
+          curl -X POST "$BUILD_HOOK_URL" \
+          -H "Content-Type: application/json"
 
       - name: Deploy to Production
         run: echo "Deployed to Production..."

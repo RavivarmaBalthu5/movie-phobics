@@ -89,6 +89,8 @@ jobs:
         run: |
           curl -X POST -d '{
             "branch": "main",
+            "commit_ref": "${{ github.sha }}",
+            "tag": "${{ env.TAG_VERSION }},
             "title": "Deploy from GitHub Actions",
             "message": "Deploy triggered from GitHub Actions"
           }' \

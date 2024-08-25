@@ -3,22 +3,24 @@ import SpotifyEmbed from './SpotifyEmbed';
 import { fetchTracks } from '../services/movieService';
 import '../css/SongsSection.css'; // Import the CSS file
 
-const SongsSection = ({ searchQuery }) => {
+const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     const [tracks, setTracks] = useState([]);
 
     useEffect(() => {
         const fetchTrack = async () => {
-            if (searchQuery) {
-                try {
-                    const response = await fetchTracks(searchQuery);
-                    setTracks(response);
-                } catch (error) {
-                    console.error('Error fetching tracks:', error);
-                }
+            let query = searchQuery ? searchQuery : 'telugu';
+            try {
+                const response = await fetchTracks(query);
+                setTracks(response);
+            } catch (error) {
+                console.error('Error fetching tracks:', error);
             }
         };
+        if (titleClick) {
+            handleTitleClick(false);
+        }
         fetchTrack();
-    }, [searchQuery]);
+    }, [titleClick, searchQuery, handleTitleClick]);
 
     return (
         <div className="songs-section">

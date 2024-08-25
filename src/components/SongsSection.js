@@ -11,8 +11,9 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
             try {
                 if(searchQuery){
                   const response = await fetchTracks(searchQuery);
-                }
+       
                 setTracks(response);
+                }
             } catch (error) {
                 console.error('Error fetching tracks:', error);
             }

@@ -1,0 +1,25 @@
+/* SongsSection.css */
+
+/* Container for the Songs Section */
+.songs-section {
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    max-width: 90%; /* Max width for better readability */
+    margin: 0 auto; /* Center align horizontally */
+    display: flex;
+    flex-wrap: wrap; /* Wrap items to the next line if necessary */
+    gap: 20px; /* Space between items */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+  }
+  
+  /* Spotify iframe container */
+  .spotify-embed {
+    max-width: 300px; /* Max width for the iframe */
+    height: 380px; /* Fixed height */
+    border: none;
+    border-radius: 8px; /* Rounded corners for iframe */
+  }
+  

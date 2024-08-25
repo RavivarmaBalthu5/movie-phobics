@@ -9,7 +9,7 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     useEffect(() => {
         const fetchTrack = async () => {
             try {
-                if(searchQuery){
+                if(searchQuery.length > 3){ //fetch song only when track name is more than 3 characters 
                   const response = await fetchTracks(searchQuery);
        
                 setTracks(response);

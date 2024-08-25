@@ -47,3 +47,8 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.movie-loading {
+  width: 100px; /* Size of the icon */
+  height: 100px; /* Size of the icon */
+}

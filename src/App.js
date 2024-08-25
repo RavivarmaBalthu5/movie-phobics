@@ -16,11 +16,12 @@ const App = () => {
   };
 
   const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchQuery();
   };
 
   const handleToggleChange = () => {
     setIsSongSearch(!isSongSearch); // Toggle between songs and movies
+    setSearchQuery('');
   };
 
   return (
@@ -33,7 +34,7 @@ const App = () => {
         isSongSearch={isSongSearch} // Pass search type state
       />
       {isSongSearch ? (
-        <SongsSection searchQuery={searchQuery} /> // Render SongsSection
+        <SongsSection searchQuery={searchQuery} handleTitleClick={handleTitleClick} /> // Render SongsSection
       ) : (
         <MoviesSection
           titleClick={titleClick}

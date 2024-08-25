@@ -8,6 +8,7 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleTitleClick = (value) => {
+    setSearchQuery('');
     setTitleClick(value);
   };
 

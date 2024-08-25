@@ -10,7 +10,7 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
         const fetchTrack = async () => {
             try {
                 if(searchQuery){
-                  const response = await fetchTracks(query);
+                  const response = await fetchTracks(searchQuery);
                 }
                 setTracks(response);
             } catch (error) {

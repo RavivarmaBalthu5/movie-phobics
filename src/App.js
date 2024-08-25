@@ -16,12 +16,11 @@ const App = () => {
   };
 
   const handleSearchChange = (event) => {
-    setSearchQuery();
+    setSearchQuery(event.target.value);
   };
 
   const handleToggleChange = () => {
     setIsSongSearch(!isSongSearch); // Toggle between songs and movies
-    setSearchQuery('');
   };
 
   return (

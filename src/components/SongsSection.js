@@ -8,10 +8,12 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     useEffect(() => {
         const fetchTrack = async () => {
-            let query = searchQuery ? searchQuery : 'telugu';
             try {
-                const response = await fetchTracks(query);
+                if(searchQuery.length > 3){ //fetch song only when track name is more than 3 characters 
+                  const response = await fetchTracks(searchQuery);
+       
                 setTracks(response);
+                }
             } catch (error) {
                 console.error('Error fetching tracks:', error);
             }

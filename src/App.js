@@ -16,12 +16,7 @@ const App = () => {
   };
 
   const handleSearchChange = (event) => {
-    const query = event.target.value;
-  
-  // Only set the search query if the input has at least 3 characters
-  if (query.length > 3) {
-    setSearchQuery(query);
-  }
+    setSearchQuery(event.target.value);
   };
 
   const handleToggleChange = () => {

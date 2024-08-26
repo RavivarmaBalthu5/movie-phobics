@@ -88,6 +88,7 @@
     height: 400px; /* Increased height for larger videos */
     max-width: 800px; /* Adjusted max width for larger screens */
     border-radius: 8px;
+    aspect-ratio: 16 / 9;
 }
 
 /* Mobile responsiveness */
@@ -102,6 +103,7 @@
 
     .video-item iframe {
         height: 360px; /* Adjusted height for medium screens */
+        aspect-ratio: 16 / 9;
     }
 }
 
@@ -128,5 +130,6 @@
 
     .video-item iframe {
         height: 250px; /* Adjusted height for mobile screens */
+        aspect-ratio: 16 / 9;
     }
 }

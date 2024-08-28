@@ -109,6 +109,21 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(25px); /* Adjusted for new size */
 }
+.enter-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.enter-button:hover {
+  background-color: #0056b3;
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

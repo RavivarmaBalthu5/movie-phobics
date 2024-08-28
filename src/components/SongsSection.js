@@ -9,9 +9,8 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     useEffect(() => {
         const fetchTrack = async () => {
-            let query = searchQuery ? searchQuery : 'telugu';
             try {
-                const response = await fetchWithRetry(fetchTracks, query);
+                const response = await fetchWithRetry(fetchTracks, searchQuery);
                 setTracks(response);
             } catch (error) {
                 console.error('Error fetching tracks after retries:', error);

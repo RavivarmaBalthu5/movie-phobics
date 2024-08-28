@@ -16,6 +16,7 @@ const App = () => {
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+    setSearchQuery(event.target.value);
   };
 
   const handleToggleChange = () => {

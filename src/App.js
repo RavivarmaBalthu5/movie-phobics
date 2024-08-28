@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import MoviesSection from './components/MoviesSection';
-import SongsSection from './components/SongsSection'; // Import SongsSection if you have it
+import SongsSection from './components/SongsSection';
 import './App.css';
 
 const App = () => {
   const [titleClick, setTitleClick] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSongSearch, setIsSongSearch] = useState(false); // New state for search type
-
+  const [isSongSearch, setIsSongSearch] = useState(false);
 
   const handleTitleClick = (value) => {
     setSearchQuery('');
@@ -17,10 +16,17 @@ const App = () => {
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
+    setSearchQuery(event.target.value);
   };
 
   const handleToggleChange = () => {
-    setIsSongSearch(!isSongSearch); // Toggle between songs and movies
+    setIsSongSearch(!isSongSearch);
+    setSearchQuery('');
+  };
+
+  const handleEnterClick = (event) => {
+    // Handle enter button click here
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -29,11 +35,12 @@ const App = () => {
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
         onTitleClick={() => handleTitleClick(true)}
-        onToggleChange={handleToggleChange} // Pass toggle handler
-        isSongSearch={isSongSearch} // Pass search type state
+        onToggleChange={handleToggleChange}
+        isSongSearch={isSongSearch}
+        onEnterClick={handleEnterClick}
       />
       {isSongSearch ? (
-        <SongsSection searchQuery={searchQuery} handleTitleClick={handleTitleClick} /> // Render SongsSection
+        <SongsSection searchQuery={searchQuery} handleTitleClick={handleTitleClick} />
       ) : (
         <MoviesSection
           titleClick={titleClick}

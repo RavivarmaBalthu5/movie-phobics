@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import SpotifyEmbed from './SpotifyEmbed';
 import { fetchTracks } from '../services/movieService';
 import '../css/SongsSection.css'; // Import the CSS file
+import { fetchWithRetry } from '../utils/utils';
+import { YOUTUBE_BASE_URL } from '../utils/configs';
 
 const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     const [tracks, setTracks] = useState([]);
@@ -9,15 +10,13 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     useEffect(() => {
         const fetchTrack = async () => {
             try {
-                if(searchQuery.length > 3){ //fetch song only when track name is more than 3 characters 
-                  const response = await fetchTracks(searchQuery);
-       
+                const response = await fetchWithRetry(fetchTracks, searchQuery);
                 setTracks(response);
-                }
             } catch (error) {
-                console.error('Error fetching tracks:', error);
+                console.error('Error fetching tracks after retries:', error);
             }
         };
+
         if (titleClick) {
             handleTitleClick(false);
         }
@@ -25,13 +24,24 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     }, [titleClick, searchQuery, handleTitleClick]);
 
     return (
-        <div className="songs-section">
-            {tracks.length > 0 ? (
-                tracks.map(track => (
-                    <SpotifyEmbed key={track.id} trackUri={track.uri} className="spotify-embed" />
-                ))
-            ) : (
-                <p className="no-tracks-message">No tracks found</p>
+        <div className="modal-videos">
+            {tracks?.length > 0 && (
+                <div>
+                    <h3>Songs</h3>
+                    <div className="video-container">
+                        {tracks?.map((track, index) => (
+                            <div key={index} className="video-item">
+                                <iframe
+                                    src={`${YOUTUBE_BASE_URL}/embed/${track._id}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                    title={track?.title}
+                                ></iframe>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             )}
         </div>
     );

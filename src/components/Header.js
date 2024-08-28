@@ -2,11 +2,12 @@ import React from 'react';
 import '../css/Header.css';
 import MovieIcon from '../assets/movie-phobics.svg';
 
-const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isSongSearch }) => {
-    let title = 'MOVIE PHOBICS'
+const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isSongSearch, onEnterClick }) => {
+    let title = 'MOVIE PHOBICS';
     if (isSongSearch) {
-        title = 'SONG PHOBICS'
+        title = 'SONG PHOBICS';
     }
+
     return (
         <header className="header">
             <div className="header-content">
@@ -28,6 +29,9 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isS
                             <span className="slider"></span>
                         </label>
                     </div>
+                    {isSongSearch && (
+                        <button className="enter-button" onClick={onEnterClick}>Enter</button>
+                    )}
                 </div>
             </div>
         </header>

@@ -21,7 +21,7 @@ const App = () => {
 
   const handleToggleChange = () => {
     setIsSongSearch(!isSongSearch);
-    setSearchQuery('');
+    setSearchQuery('admin');
   };
 
   const handleEnterClick = (event) => {

@@ -16,22 +16,21 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isS
             </div>
             <div className="header-right">
                 <div className="search-container">
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={searchQuery}
-                        onChange={onSearchChange}
-                        className="search-input"
-                    />
+                    {
+                        !isSongSearch && <input
+                            type="text"
+                            placeholder="Search..."
+                            value={searchQuery}
+                            onChange={onSearchChange}
+                            className="search-input"
+                        />
+                    }
                     <div className="switch-container">
                         <label className="switch">
                             <input type="checkbox" checked={isSongSearch} onChange={onToggleChange} />
                             <span className="slider"></span>
                         </label>
                     </div>
-                    {isSongSearch && (
-                        <button className="enter-button" onClick={onEnterClick}>Enter</button>
-                    )}
                 </div>
             </div>
         </header>

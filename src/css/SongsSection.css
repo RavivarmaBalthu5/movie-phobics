@@ -107,26 +107,42 @@
 
 @media (max-width: 768px) {
   .modal-content {
-      max-width: 95%; /* Adjusted for mobile screens */
+    max-width: 95%; /* Adjusted for mobile screens */
   }
 
   .modal-main {
-      flex-direction: column;
+    flex-direction: column;
   }
 
   .modal-left, .modal-right {
-      width: 100%;
+    width: 100%;
   }
 
   .modal-left {
-      margin-bottom: 20px;
+    margin-bottom: 20px;
   }
 
   .modal-poster {
-      max-width: 100%;
+    max-width: 100%;
   }
-
+  .video-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(680px, 1fr)); /* Responsive grid */
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
+  .video-item {
+    text-align: center;
+    
+  }
+  
   .video-item iframe {
-      height: 250px; /* Adjusted height for mobile screens */
+    width: 100%;
+    height: 100%;
+    max-height: 670Px;
+    max-width: 750px; /* Adjusted max width for larger screens */
+    border-radius: 8px;
   }
 }

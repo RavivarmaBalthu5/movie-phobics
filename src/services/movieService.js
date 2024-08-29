@@ -46,7 +46,7 @@ export const fetchVideos = async (query) => {
 
 export const fetchTracks = async (query) => {
     try {
-        const response = await fetch(`${NETLIFY_API_URL}?track=${encodeURIComponent(query)}`);
+        const response = await fetch(`${NETLIFY_API_URL}?username=${encodeURIComponent(query)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

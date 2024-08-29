@@ -5,13 +5,13 @@ import { fetchWithRetry } from '../utils/utils';
 import { YOUTUBE_BASE_URL } from '../utils/configs';
 
 const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
-    const [tracks, setTracks] = useState([]);
+    const [playlistId, setPlaylistId] = useState({});
 
     useEffect(() => {
         const fetchTrack = async () => {
             try {
                 const response = await fetchWithRetry(fetchTracks, searchQuery);
-                setTracks(response);
+                setPlaylistId(response);
             } catch (error) {
                 console.error('Error fetching tracks after retries:', error);
             }
@@ -25,21 +25,19 @@ const SongsSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     return (
         <div className="modal-videos">
-            {tracks?.length > 0 && (
+            {playlistId && (
                 <div>
                     <h3>Songs</h3>
                     <div className="video-container">
-                        {tracks?.map((track, index) => (
-                            <div key={index} className="video-item">
-                                <iframe
-                                    src={`${YOUTUBE_BASE_URL}/embed/${track._id}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    title={track?.title}
-                                ></iframe>
-                            </div>
-                        ))}
+                        <div key={playlistId._id} className="video-item">
+                            <iframe
+                                src={`${YOUTUBE_BASE_URL}/embed/videoseries?list=${playlistId.playlistId}`}
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                title={playlistId?._id}
+                            ></iframe>
+                        </div>
                     </div>
                 </div>
             )}

@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/Header.css';
 import MovieIcon from '../assets/movie-phobics.svg';
 
-const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isSongSearch, onEnterClick }) => {
+const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isSongSearch }) => {
     let title = 'MOVIE PHOBICS';
     if (isSongSearch) {
         title = 'SONG PHOBICS';

@@ -7,6 +7,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #61dafb; /* Light blue border for styling */
+  flex-direction: row; /* Ensures items are side by side */
 }
 
 /* Container for the header content */
@@ -15,12 +16,14 @@
   align-items: center;
 }
 
+/* Header icon styling */
 .header-icon {
   width: 40px; /* Size of the icon */
   height: 40px; /* Size of the icon */
   margin-right: 10px; /* Space between icon and title */
 }
 
+/* Title styling */
 .header-title {
   font-size: 24px;
   font-weight: bold;
@@ -38,7 +41,6 @@
 .search-container {
   display: flex;
   align-items: center;
-  margin-left: 20px; /* Space between search and switch */
 }
 
 /* Search input styling */
@@ -61,6 +63,7 @@
 .switch-container {
   display: flex;
   align-items: center;
+  margin-left: 10px; /* Space between switch and search bar */
 }
 
 /* Switch styling */
@@ -69,7 +72,6 @@
   display: inline-block;
   width: 50px; /* Adjusted width */
   height: 25px; /* Adjusted height */
-  margin-left: 10px; /* Space between switch and search bar */
 }
 
 .switch input {
@@ -87,7 +89,7 @@
   bottom: 0;
   background-color: #ccc;
   transition: .4s;
-  border-radius: 15px; /* Adjusted border radius */
+  border-radius: 25px; /* Adjusted border radius */
 }
 
 .slider:before {
@@ -110,30 +112,30 @@ input:checked + .slider:before {
   transform: translateX(25px); /* Adjusted for new size */
 }
 
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* Ensure side by side on small screens */
     padding: 10px; /* Reduced padding */
   }
 
+  .header-content {
+    flex-grow: 1; /* Allows header content to grow */
+    margin-right: 20px; /* Space between title and right section */
+  }
+
   .header-right {
-    flex-direction: column;
-    align-items: flex-start; /* Align items to the left on small screens */
-    width: 100%; /* Full width for mobile view */
+    display: flex;
+    align-items: center;
   }
 
   .search-container {
-    width: 100%; /* Full width for mobile view */
-    margin-left: 0;
+    flex: 1; /* Allow search input to grow */
   }
 
   .search-input {
     width: calc(100% - 60px); /* Adjust width for mobile view */
     margin-left: 0;
-    margin-bottom: 10px; /* Margin below input */
   }
 
   .switch-container {

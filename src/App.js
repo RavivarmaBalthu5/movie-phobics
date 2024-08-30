@@ -21,13 +21,8 @@ const App = () => {
 
   const handleToggleChange = () => {
     setIsSongSearch(!isSongSearch);
-    setSearchQuery('admin');
   };
 
-  const handleEnterClick = (event) => {
-    // Handle enter button click here
-    setSearchQuery(event.target.value);
-  };
 
   return (
     <div className="app">
@@ -37,10 +32,9 @@ const App = () => {
         onTitleClick={() => handleTitleClick(true)}
         onToggleChange={handleToggleChange}
         isSongSearch={isSongSearch}
-        onEnterClick={handleEnterClick}
       />
       {isSongSearch ? (
-        <SongsSection searchQuery={searchQuery} handleTitleClick={handleTitleClick} />
+        <SongsSection handleTitleClick={handleTitleClick} />
       ) : (
         <MoviesSection
           titleClick={titleClick}

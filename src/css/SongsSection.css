@@ -1,82 +1,14 @@
-/* src/css/MovieDetails.css */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px); /* Adds blur effect to the background */
-}
-
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 90%; /* Adjusted for a smaller width */
-  max-height: 90%;
-  overflow: auto;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal-main {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px; /* Space between main content and videos */
-}
-
-.modal-left {
-  flex: 1;
-  text-align: center;
-}
-
-.modal-right {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-}
-
-.modal-poster {
-  width: 100%;
-  max-width: 250px; /* Adjusted for better layout */
-  height: auto;
-  border-radius: 8px;
-}
-
-.modal-title {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.modal-release-date, .modal-vote-average, .modal-overview {
-  margin-bottom: 10px;
-}
-
+/* src/css/SongsSection.css */
 .modal-videos {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 
 .video-container {
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(680px, 1fr)); /* Responsive grid */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusts to fit content */
 }
 
 .video-item {
@@ -85,64 +17,115 @@
 
 .video-item iframe {
   width: 100%;
-  height: 400px; /* Increased height for larger videos */
-  max-width: 800px; /* Adjusted max width for larger screens */
+  height: 200px; /* Default height for mobile screens */
+  max-width: 100%; /* Ensure iframe does not exceed container width */
   border-radius: 8px;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 1024px) {
-  .modal-content {
-      max-width: 85%; /* Slightly adjusted for medium screens */
-  }
-
-  .modal-poster {
-      max-width: 100%;
+/* Desktop / Laptop */
+@media (min-width: 1024px) {
+  .video-container {
+    grid-template-columns: repeat(3, 1fr); /* Three videos per row on large screens */
   }
 
   .video-item iframe {
-      height: 360px; /* Adjusted height for medium screens */
+    height: 300px; /* Adjusted height for larger screens */
   }
 }
 
-@media (max-width: 768px) {
-  .modal-content {
-    max-width: 95%; /* Adjusted for mobile screens */
-  }
-
-  .modal-main {
-    flex-direction: column;
-  }
-
-  .modal-left, .modal-right {
-    width: 100%;
-  }
-
-  .modal-left {
-    margin-bottom: 20px;
-  }
-
-  .modal-poster {
-    max-width: 100%;
-  }
+/* Tablet */
+@media (max-width: 1024px) {
   .video-container {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(680px, 1fr)); /* Responsive grid */
-    margin-left: 5%;
-    margin-right: 5%;
+    grid-template-columns: repeat(2, 1fr); /* Two videos per row on tablets */
   }
-  
-  .video-item {
-    text-align: center;
-    
-  }
-  
+
   .video-item iframe {
-    width: 100%;
-    height: 100%;
-    max-height: 670Px;
-    max-width: 750px; /* Adjusted max width for larger screens */
-    border-radius: 8px;
+    height: 250px; /* Adjusted height for medium screens */
   }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .video-container {
+    grid-template-columns: 1fr; /* One video per row on mobile screens */
+    margin: 0; /* Remove margins to fit the screen width */
+    padding: 0 5%; /* Optional: add some padding for aesthetics */
+  }
+
+  .video-item {
+    margin-bottom: 10px; /* Space between video items */
+  }
+
+  .video-item iframe {
+    height: 180px; /* Adjusted height to ensure it fits well on smaller screens */
+    max-height: 180px; /* Ensures iframe does not exceed height */
+  }
+}
+
+/* Styling for input box and buttons */
+.update-section {
+  display: flex;
+  gap: 10px; /* Space between input and buttons */
+  margin-top: 20px; /* Space from the videos section */
+  margin-bottom: 10px;
+}
+
+.update-section input[type="text"] {
+  flex: 1; /* Allows the input to grow and fill available space */
+  padding: 0 12px; /* Horizontal padding */
+  font-size: 14px; /* Smaller font size */
+  border: 1px solid #ccc; /* Light border for the input box */
+  border-radius: 5px; /* Rounded corners */
+  box-sizing: border-box; /* Ensures padding does not affect width */
+  height: 40px; /* Set a fixed height to match the button */
+}
+
+.update-section button {
+  padding: 0 12px; /* Horizontal padding to match input box */
+  font-size: 14px; /* Smaller font size */
+  border: 1px solid #ccc; /* Light border for the button */
+  border-radius: 5px; /* Rounded corners */
+  background-color: #007bff; /* Primary color for the button */
+  color: #fff; /* Text color */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  height: 40px; /* Set a fixed height to match the input box */
+}
+
+.update-section button:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Mobile responsiveness for input and buttons */
+@media (max-width: 768px) {
+  .update-section {
+    flex-direction: column; /* Stack input and button on top of each other */
+    gap: 5px; /* Space between input and button */
+    padding: 0; /* Remove extra padding */
+  }
+
+  .update-section input[type="text"],
+  .update-section button {
+    font-size: 14px; /* Adjusted font size for mobile */
+    padding: 8px; /* Adjusted padding for mobile screens */
+    height: auto; /* Let height adjust based on padding */
+  }
+}
+
+/* Center loading icon */
+.movie-loading-container {
+  display: flex;
+  align-items: center;  /* Centers content vertically */
+  justify-content: center; /* Centers content horizontally */
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  position: fixed; /* Fixed position to keep it in the viewport */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  background-color: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
+}
+
+.movie-loading {
+  width: 50px; /* Adjust the size of the loading icon */
+  height: 50px; /* Adjust the size of the loading icon */
 }

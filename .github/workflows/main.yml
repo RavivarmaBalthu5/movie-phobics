@@ -82,17 +82,5 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to Netlify
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_BUILD_HOOK_URL: ${{ secrets.NETLIFY_BUILD_HOOK_URL }}
-        run: |          
-          BUILD_HOOK_URL="$NETLIFY_BUILD_HOOK_URL?trigger_branch=main&clear_cache=true"
-          
-          # Trigger the build hook
-          curl -X POST "$BUILD_HOOK_URL" \
-          -H "Content-Type: application/json"
-
       - name: Deploy to Production
         run: echo "Deployed to Production..."

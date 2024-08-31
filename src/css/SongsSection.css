@@ -6,9 +6,17 @@
 }
 
 .video-container {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusts to fit content */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  width: 100%; /* Full width of the container */
+  padding: 20px; /* Add some padding around the container */
+}
+#player {
+  height: 350px; /* Height of the player */
+  width: 560px; /* Width of the player */
+  max-width: 100%; /* Responsive width */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .video-item {
@@ -49,7 +57,7 @@
   .video-container {
     grid-template-columns: 1fr; /* One video per row on mobile screens */
     margin: 0; /* Remove margins to fit the screen width */
-    padding: 0 5%; /* Optional: add some padding for aesthetics */
+    padding: 0; /* Optional: add some padding for aesthetics */
   }
 
   .video-item {
@@ -85,6 +93,9 @@
   margin: 0;
   flex: 1;
   text-align: center;
+}
+.song-list li{
+  list-style: none;
 }
 
 /* Style for the delete button */

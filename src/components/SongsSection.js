@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { addNewTrack, deleteTrack, fetchTracks } from '../services/movieService';
 import '../css/SongsSection.css';
 import { fetchWithRetry } from '../utils/utils';
@@ -9,14 +9,21 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
     const [embedded, setEmbedded] = useState([]);
     const [videoId, setVideoId] = useState('');
     const [trackTitle, setTrackTitle] = useState('');
+    const [playing, setPlaying] = useState(false); // Track play/pause state
+    const [currentIndex, setCurrentIndex] = useState(0); // Index of the current video
+    const playerRef = useRef(null); // Ref for the player element
+    const player = useRef(null); // Ref for the YouTube player instance
 
     useEffect(() => {
         const fetchTrack = async () => {
             try {
                 const response = await fetchWithRetry(fetchTracks, 'admin');
                 setEmbedded(response);
+                if (response.length > 0 && !player.current) {
+                    initializePlayer(response[0].id); // Initialize player with the first video
+                }
             } catch (error) {
-                console.error('Error fetching tracks after retries:', error);
+                console.error('Error fetching tracks:', error);
             }
         };
 
@@ -25,6 +32,73 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
         }
         fetchTrack();
     }, [titleClick, handleTitleClick]);
+
+    useEffect(() => {
+        // Load YouTube API script if not already loaded
+        if (!window.YT) {
+            const script = document.createElement('script');
+            script.src = `${YOUTUBE_BASE_URL}/iframe_api`;
+            script.onload = () => {
+                window.YT.ready(() => {
+                    if (embedded.length > 0 && !player.current) {
+                        initializePlayer(embedded[0].id);
+                    }
+                });
+            };
+            document.body.appendChild(script);
+        } else if (embedded.length > 0 && !player.current) {
+            initializePlayer(embedded[0].id);
+        }
+    }, [embedded]);
+
+    const initializePlayer = (videoId) => {
+        console.log('Initializing player with video ID:', videoId);
+        if (!window.YT) {
+            console.error('YouTube API is not loaded');
+            return;
+        }
+
+        if (!playerRef.current) {
+            console.error('YouTube player element ref is not set');
+            return;
+        }
+
+        player.current = new window.YT.Player(playerRef.current, {
+            height: '350', // Adjusted height
+            width: '560',
+            videoId: videoId,
+            events: {
+                'onReady': () => {
+                    console.log('Player is ready');
+                    if (playing) {
+                        player.current.playVideo();
+                    }
+                },
+                'onStateChange': (event) => {
+                    console.log('Player state changed:', event.data);
+                    if (event.data === window.YT.PlayerState.ENDED) {
+                        playNextVideo();
+                    }
+                }
+            }
+        });
+    };
+
+    const playNextVideo = () => {
+        console.log('Playing next video');
+        setCurrentIndex(prevIndex => {
+            const nextIndex = (prevIndex + 1) % embedded.length;
+            console.log('Next video index:', nextIndex);
+            if (player.current) {
+                console.log('Loading video ID:', embedded[nextIndex].id);
+                player.current.loadVideoById(embedded[nextIndex].id);
+                player.current.playVideo();
+            } else {
+                console.error('Player instance is not available');
+            }
+            return nextIndex;
+        });
+    };
 
     const handleVideoIdChange = (e) => {
         setVideoId(e.target.value);
@@ -58,6 +132,17 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
         }
     };
 
+    const togglePlayPause = () => {
+        if (player.current) {
+            if (playing) {
+                player.current.pauseVideo();
+            } else {
+                player.current.playVideo();
+            }
+            setPlaying(!playing);
+        }
+    };
+
     return (
         <div className="modal-videos">
             <div>
@@ -77,28 +162,81 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
                             placeholder="Enter track title"
                         />
                         <button onClick={handleUpdateClick}>Update</button>
+                        <button onClick={togglePlayPause} >
+                            {playing ? 'Pause' : 'Play'}
+                        </button>
                     </div>
+
                 </div>
 
                 <div className="video-container">
                     {embedded.length > 0 ? (
-                        embedded.map((track) => (
-                            <div key={track.id} className="video-item">
-                                <div className="delete-section">
-                                    <h3>{track?.title}</h3>
-                                    <button onClick={() => handleDelete(track.id)}>Delete</button>
-                                </div>
-                                <iframe
-                                    src={`${YOUTUBE_BASE_URL}/embed/${track.id}`}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    title={track.id}
-                                    width="560"
-                                    height="315"
-                                ></iframe>
-                            </div>
-                        ))
+                        <div ref={playerRef} id="player" />
+                    ) : (
+                        <div className="movie-loading-container">
+                            <img src={loadingIcon} alt="loading" className="movie-loading" />
+                        </div>
+                    )}
+                </div>
+
+                <div className="song-list">
+                    {embedded.length > 0 ? (
+                        <ul>
+                            {embedded.map((track, index) => (
+                                <li
+                                    key={track.id}
+                                    style={{
+                                        backgroundColor: index === currentIndex ? '#d3d3d3' : 'transparent',
+                                        padding: '10px',
+                                        margin: '5px 0',
+                                        borderRadius: '5px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    {track.title}
+                                    <button
+                                        onClick={() => {
+                                            setCurrentIndex(index);
+                                            if (player.current) {
+                                                player.current.loadVideoById(track.id);
+                                                player.current.playVideo();
+                                            } else {
+                                                console.error('Player instance is not available');
+                                            }
+                                        }}
+                                        style={{
+                                            float: 'right',
+                                            backgroundColor: '#4CAF50',
+                                            color: '#fff',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                            padding: '5px 10px',
+                                            marginLeft: '10px'
+                                        }}
+                                    >
+                                        Play
+                                    </button>
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleDelete(track.id);
+                                        }}
+                                        style={{
+                                            float: 'right',
+                                            backgroundColor: '#ff0000',
+                                            color: '#fff',
+                                            border: 'none',
+                                            borderRadius: '5px',
+                                            cursor: 'pointer',
+                                            padding: '5px 10px'
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     ) : (
                         <div className="movie-loading-container">
                             <img src={loadingIcon} alt="loading" className="movie-loading" />

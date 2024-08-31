@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { addNewTrack, fetchTracks } from '../services/movieService';
-import '../css/SongsSection.css'; // Import the CSS file
+import { addNewTrack, deleteTrack, fetchTracks } from '../services/movieService';
+import '../css/SongsSection.css';
 import { fetchWithRetry } from '../utils/utils';
 import { YOUTUBE_BASE_URL } from '../utils/configs';
 import loadingIcon from '../assets/loading.svg';
@@ -8,6 +8,7 @@ import loadingIcon from '../assets/loading.svg';
 const SongsSection = ({ titleClick, handleTitleClick }) => {
     const [embedded, setEmbedded] = useState([]);
     const [videoId, setVideoId] = useState('');
+    const [trackTitle, setTrackTitle] = useState('');
 
     useEffect(() => {
         const fetchTrack = async () => {
@@ -29,19 +30,31 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
         setVideoId(e.target.value);
     };
 
+    const handleTitleChange = (e) => {
+        setTrackTitle(e.target.value);
+    };
+
     const handleUpdateClick = async () => {
-        if (!videoId) {
-            console.error('Video ID is required');
+        if (!videoId || !trackTitle) {
+            console.error('Video ID and track title are required');
             return;
         }
         try {
-            // Assuming updateVideoId is a function to update videoId in the backend
-            const response = await addNewTrack("admin", videoId);
-            // Optionally, fetch the updated list of tracks after update
+            const response = await addNewTrack("admin", videoId, trackTitle);
             setEmbedded(response);
-            setVideoId(''); // Clear input after successful update
+            setVideoId('');
+            setTrackTitle('');
         } catch (error) {
             console.error('Error updating video ID:', error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await deleteTrack("admin", id);
+            setEmbedded(response);
+        } catch (error) {
+            console.error('Error deleting video:', error);
         }
     };
 
@@ -57,7 +70,13 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
                             onChange={handleVideoIdChange}
                             placeholder="Enter video ID"
                         />
-                        <button onClick={handleUpdateClick}>Update Video ID</button>
+                        <input
+                            type="text"
+                            value={trackTitle}
+                            onChange={handleTitleChange}
+                            placeholder="Enter track title"
+                        />
+                        <button onClick={handleUpdateClick}>Update</button>
                     </div>
                 </div>
 
@@ -65,6 +84,10 @@ const SongsSection = ({ titleClick, handleTitleClick }) => {
                     {embedded.length > 0 ? (
                         embedded.map((track) => (
                             <div key={track.id} className="video-item">
+                                <div className="delete-section">
+                                    <h3>{track?.title}</h3>
+                                    <button onClick={() => handleDelete(track.id)}>Delete</button>
+                                </div>
                                 <iframe
                                     src={`${YOUTUBE_BASE_URL}/embed/${track.id}`}
                                     frameBorder="0"

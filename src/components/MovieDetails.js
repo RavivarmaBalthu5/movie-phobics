@@ -13,7 +13,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     // Separate trailers and other videos
     const trailers = videos.length > 0 ? videos.filter(video => video.type === 'Trailer').slice(0, 4) : [];
     const otherVideos = videos.length > 0 ? videos.filter(video => video.type !== 'Trailer').slice(0, 4) : [];
-
+    const moviePosterPath = `${IMG_BASE_URL}${movie?.poster_path}` ? `${IMG_BASE_URL}${movie?.poster_path}`: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTynbQvJLSVqh0EbcVxmZnQMd_D2EUR4rKBRQ&usqp=CAU';
 
 
     return (
@@ -23,7 +23,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                 <div className="modal-main">
                     <div className="modal-left">
                         <img
-                            src={`${IMG_BASE_URL}${movie?.poster_path}`}
+                            src={moviePosterPath}
                             alt={movie?.title}
                             className="modal-poster"
                         />

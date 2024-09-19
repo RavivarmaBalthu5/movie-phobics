@@ -25,12 +25,7 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isS
                             className="search-input"
                         />
                     }
-                    <div className="switch-container">
-                        <label className="switch">
-                            <input type="checkbox" checked={isSongSearch} onChange={onToggleChange} />
-                            <span className="slider"></span>
-                        </label>
-                    </div>
+                    
                 </div>
             </div>
         </header>

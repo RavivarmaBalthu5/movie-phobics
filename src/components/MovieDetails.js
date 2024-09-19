@@ -23,7 +23,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                 <div className="modal-main">
                     <div className="modal-left">
                         <img
-                            src={``}
+                            src={moviePosterPath}
                             alt={movie?.title}
                             className="modal-poster"
                         />

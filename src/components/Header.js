@@ -16,7 +16,7 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick }) => {
                     {
                         <input
                             type="text"
-                            placeholder="Search..."
+                            placeholder="Search Movie..."
                             value={searchQuery}
                             onChange={onSearchChange}
                             className="search-input"

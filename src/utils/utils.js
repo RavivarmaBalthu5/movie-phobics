@@ -1,3 +1,5 @@
+const { DEFAULT_IMG_URL, IMG_BASE_URL } = require("./configs");
+
 const fetchWithRetry = async (fetchFunction, query, retries = 3) => {
     let attempt = 0;
     while (attempt < retries) {
@@ -13,7 +15,11 @@ const fetchWithRetry = async (fetchFunction, query, retries = 3) => {
         }
     }
 };
+const getImageUrl = (movie) => {
+    return movie?.poster_path ? `${IMG_BASE_URL}${movie?.poster_path}` : DEFAULT_IMG_URL;
+}
 
 module.exports = {
-    fetchWithRetry
+    fetchWithRetry,
+    getImageUrl
 }

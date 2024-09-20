@@ -1,12 +1,13 @@
 import React from 'react';
 import '../css/MovieCard.css'; // Import CSS file for styling
-import { IMG_BASE_URL } from '../utils/configs';
+import { getImageUrl } from '../utils/utils';
 
 const MovieCard = ({ movie, onClick }) => {
+
     return (
         <div className="movie-card" onClick={onClick}>
             <img
-                src={`${IMG_BASE_URL}${movie.poster_path}`}
+                src={getImageUrl(movie)}
                 alt={movie.title}
                 className="movie-card-image"
             />

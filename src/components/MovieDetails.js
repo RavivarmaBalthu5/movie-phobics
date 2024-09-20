@@ -1,20 +1,19 @@
-// src/components/MovieDetails.js
-import React from 'react';
-import '../css/MovieDetails.css'; // Import the CSS file for styling
-import { IMG_BASE_URL, YOUTUBE_BASE_URL } from '../utils/configs'; // Import IMG_BASE_URL for image paths
+import React, { useState } from 'react';
+import '../css/MovieDetails.css';
+import { YOUTUBE_BASE_URL } from '../utils/configs';
+import { getImageUrl } from '../utils/utils';
 
 const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
+    const [filter, setFilter] = useState('');
     if (!isOpen) return null;
 
     const handleContentClick = (event) => {
         event.stopPropagation();
     };
 
-    // Separate trailers and other videos
-    const trailers = videos.length > 0 ? videos.filter(video => video.type === 'Trailer').slice(0, 4) : [];
-    const otherVideos = videos.length > 0 ? videos.filter(video => video.type !== 'Trailer').slice(0, 4) : [];
-    const moviePosterPath = `${IMG_BASE_URL}${movie?.poster_path}` ? `${IMG_BASE_URL}${movie?.poster_path}`: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTynbQvJLSVqh0EbcVxmZnQMd_D2EUR4rKBRQ&usqp=CAU';
-
+    // Extract unique video types for filters
+    const filters = Array.from(new Set(videos.map(video => video.type)));
+    const filteredVideos = videos.length > 0 && filter ? videos.filter(video => video.type === filter) : [];
 
     return (
         <div className="modal-overlay" onClick={onClose}>
@@ -23,7 +22,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                 <div className="modal-main">
                     <div className="modal-left">
                         <img
-                            src={moviePosterPath}
+                            src={getImageUrl(movie)}
                             alt={movie?.title}
                             className="modal-poster"
                         />
@@ -35,12 +34,19 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                         <p className="modal-overview">{movie?.overview}</p>
                     </div>
                 </div>
+
                 <div className="modal-videos">
-                    {trailers?.length > 0 && (
+                    <div className="filter-tabs">
+                        {filters.map((f, index) => (
+                            <button key={index} onClick={() => setFilter(f)}>
+                                {f.charAt(0).toUpperCase() + f.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+                    {filteredVideos.length > 0 && (
                         <div>
-                            <h3>Trailers</h3>
                             <div className="video-container">
-                                {trailers?.map((video, index) => (
+                                {filteredVideos.map((video, index) => (
                                     <div key={index} className="video-item">
                                         <iframe
                                             src={`${YOUTUBE_BASE_URL}/embed/${video.key}`}
@@ -48,26 +54,6 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen
                                             title={video?.name}
-
-                                        ></iframe>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    {otherVideos?.length > 0 && (
-                        <div>
-                            <h3>Other Videos</h3>
-                            <div className="video-container">
-                                {otherVideos?.map((video, index) => (
-                                    <div key={index} className="video-item">
-                                        <iframe
-                                            src={`${YOUTUBE_BASE_URL}/embed/${video?.key}`}
-                                            frameBorder="0"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media;"
-                                            allowFullScreen
-                                            title={video?.name}
-
                                         ></iframe>
                                     </div>
                                 ))}

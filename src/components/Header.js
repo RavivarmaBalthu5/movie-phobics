@@ -2,11 +2,8 @@ import React from 'react';
 import '../css/Header.css';
 import MovieIcon from '../assets/movie-phobics.svg';
 
-const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isSongSearch }) => {
+const Header = ({ searchQuery, onSearchChange, onTitleClick }) => {
     let title = 'MOVIE PHOBICS';
-    if (isSongSearch) {
-        title = 'SONG PHOBICS';
-    }
 
     return (
         <header className="header">
@@ -17,7 +14,7 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isS
             <div className="header-right">
                 <div className="search-container">
                     {
-                        !isSongSearch && <input
+                        <input
                             type="text"
                             placeholder="Search..."
                             value={searchQuery}
@@ -25,7 +22,7 @@ const Header = ({ searchQuery, onSearchChange, onTitleClick, onToggleChange, isS
                             className="search-input"
                         />
                     }
-                    
+
                 </div>
             </div>
         </header>

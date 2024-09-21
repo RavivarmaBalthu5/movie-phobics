@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/MovieDetails.css';
 import { YOUTUBE_BASE_URL } from '../utils/configs';
 import { getImageUrl } from '../utils/utils';
 
 const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     const [filter, setFilter] = useState('');
+    useEffect(() => {
+        if (isOpen) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+
+        // Cleanup to remove class when component unmounts
+        return () => document.body.classList.remove('modal-open');
+    }, [isOpen]);
+
     if (!isOpen) return null;
 
     const handleContentClick = (event) => {

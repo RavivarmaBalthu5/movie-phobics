@@ -79,7 +79,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     return (
         <div>
-        {!(searchQuery === '') && (
+        {(searchQuery === '') && (
             <div className="pagination">
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
                     Previous

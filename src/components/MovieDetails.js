@@ -23,7 +23,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     };
 
     // Extract unique video types for filters
-    const filters = Array.from(new Set(videos.map(video => video.type)));
+    const filters = videos.length > 0 ? Array.from(new Set(videos.map(video => video.type))) : []
     const filteredVideos = videos.length > 0 && filter ? videos.filter(video => video.type === filter) : [];
 
     return (

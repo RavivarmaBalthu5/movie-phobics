@@ -79,7 +79,6 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     return (
         <div>
-        {!(searchQuery === '') && (
             <div className="pagination">
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
                     Previous
@@ -94,7 +93,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                 <button onClick={handleNextPage} disabled={totalPages === currentPage}>
                     Next
                 </button>
-            </div>)}
+            </div>
             <div className="movie-results">
                 {loading ? (
                     <img src={loadingIcon} alt="loading" className="movie-loading" />

@@ -79,22 +79,22 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
 
     return (
         <div>
-        {(searchQuery === '') && (
-            <div className="pagination">
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                <select value={currentPage} onChange={handlePageChange}>
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <option key={index} value={index + 1}>
-                            {index + 1}
-                        </option>
-                    ))}
-                </select>
-                <button onClick={handleNextPage} disabled={totalPages === currentPage}>
-                    Next
-                </button>
-            </div>)}
+            {(searchQuery === '') && (
+                <div className="pagination">
+                    <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                        Previous
+                    </button>
+                    <select value={currentPage} onChange={handlePageChange}>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <option key={index} value={index + 1}>
+                                {index + 1}
+                            </option>
+                        ))}
+                    </select>
+                    <button onClick={handleNextPage} disabled={totalPages === currentPage}>
+                        Next
+                    </button>
+                </div>)}
             <div className="movie-results">
                 {loading ? (
                     <img src={loadingIcon} alt="loading" className="movie-loading" />

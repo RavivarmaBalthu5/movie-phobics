@@ -1,5 +1,3 @@
-// src/service.js
-
 import { NETLIFY_API_URL } from "../utils/configs";
 
 export const fetchMovies = async (query) => {
@@ -56,45 +54,3 @@ export const fetchVideos = async (query) => {
         return { results: [] }; // Return an empty results array in case of error
     }
 };
-
-export const fetchTracks = async (query) => {
-    try {
-        const response = await fetch(`${NETLIFY_API_URL}?username=${encodeURIComponent(query)}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error fetching tracks:', error);
-        return { results: [] }; // Return an empty results array in case of error
-    }
-};
-
-export const addNewTrack = async (query, trackId, trackTitle) => {
-    try {
-        const response = await fetch(`${NETLIFY_API_URL}?username=${encodeURIComponent(query)}&updateTrackId=${encodeURIComponent(trackId)}&updateTrackTitle=${encodeURIComponent(trackTitle)}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error while adding tracks:', error);
-        return { results: [] }; // Return an empty results array in case of error
-    }
-}
-
-export const deleteTrack = async (username, trackId) => {
-    try {
-        const response = await fetch(`${NETLIFY_API_URL}?username=${encodeURIComponent(username)}&deleteTrackId=${encodeURIComponent(trackId)}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error('Error while adding tracks:', error);
-        return { results: [] }; // Return an empty results array in case of error
-    }
-}

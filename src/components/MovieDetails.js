@@ -11,8 +11,6 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
         } else {
             document.body.classList.remove('modal-open');
         }
-
-        // Cleanup to remove class when component unmounts
         return () => document.body.classList.remove('modal-open');
     }, [isOpen]);
 

@@ -9,6 +9,15 @@ on:
     branches:
       - main
       - feature*
+  workflow_dispatch:
+    inputs:
+      release_version:
+        description: 'Release version to be used'
+        required: true
+        default: 'v1.0.0'
+  release:
+    types: [published]
+
 
 jobs:
   build_and_deploy-dev:
@@ -26,36 +35,45 @@ jobs:
       - name: Deployed to Dev
         run: echo "Deployed to Dev..."
 
-  deploy-prod:
+  create_release_version:
     needs: build_and_deploy-dev
-    if: github.ref == 'refs/heads/main' && success()
+    if: github.ref == 'refs/heads/main' && success() && github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
-    environment:
-      name: prod
-      url: https://moviephobics.netlify.app 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Get Latest Tag
+      - name: Get Latest Tag and Check for Changes
         id: get_tag
         run: |
           git fetch --tags
           latest_tag=$(git tag -l "v*" | sort -V | tail -n 1)
+          latest_commit=$(git rev-parse HEAD)
+
           if [ -z "$latest_tag" ]; then
             new_tag="v1.0.0"
           else
-            version=$(echo "$latest_tag" | sed 's/v//')
-            IFS='.' read -r major minor patch <<< "$version"
-            new_patch=$((patch + 1))
-            new_tag="v${major}.${minor}.${new_patch}"
+            last_tag_commit=$(git rev-list -n 1 "$latest_tag")
+            if [ "$latest_commit" != "$last_tag_commit" ]; then
+              version=$(echo "$latest_tag" | sed 's/v//')
+              IFS='.' read -r major minor patch <<< "$version"
+              new_patch=$((patch + 1))
+              new_tag="v${major}.${minor}.${new_patch}"
+            else
+              echo "No new changes to tag."
+              exit 0
+            fi
           fi
+
           echo "New tag: $new_tag"
           echo "TAG_VERSION=$new_tag" >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Tag
+        if: env.TAG_VERSION != 'v1.0.0'
         id: create_tag
         run: |
           git tag $TAG_VERSION
@@ -64,6 +82,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
+        if: env.TAG_VERSION != 'v1.0.0'
         id: create_release
         uses: actions/create-release@v1
         with:
@@ -73,6 +92,26 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy_prod:
+    needs: create_release_version
+    if: github.ref == 'refs/heads/main' && success() || (github.event_name == 'workflow_dispatch' && github.event.inputs.release_version)
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://moviephobics.netlify.app 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: Checkout specific release tag
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git fetch --tags
+          git checkout ${{ github.event.inputs.release_version }}
+          
       - name: Deploying to Production
         run: echo "Deploying to Production..."
 

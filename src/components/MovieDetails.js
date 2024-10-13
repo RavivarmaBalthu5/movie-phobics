@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import '../css/MovieDetails.css';
 import { YOUTUBE_BASE_URL } from '../utils/configs';
 import { getImageUrl } from '../utils/utils';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     const [filter, setFilter] = useState('');
@@ -27,7 +29,12 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={handleContentClick}>
-                <button className="modal-close" onClick={onClose}>X</button>
+                <button className="modal-close" onClick={onClose}>
+                    <FontAwesomeIcon
+                        className='icon'
+                        icon={faTimes}
+                    />
+                </button>
                 <div className="modal-main">
                     <div className="modal-left">
                         <img
@@ -47,7 +54,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                 <div className="modal-videos">
                     <div className="filter-tabs">
                         {filters.map((f, index) => (
-                            <button key={index} onClick={() => setFilter(f)}>
+                            <button key={index} onClick={() => setFilter(f)} className='button'>
                                 {f.charAt(0).toUpperCase() + f.slice(1)}
                             </button>
                         ))}

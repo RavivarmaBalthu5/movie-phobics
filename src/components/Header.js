@@ -1,26 +1,23 @@
 import React from 'react';
 import '../css/Header.css';
-import MovieIcon from '../assets/movie-phobics.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ searchQuery, onSearchChange, onTitleClick }) => {
+const Header = ({ onTitleClick, toggleSearch, isSearchVisible }) => {
     return (
         <header className="header">
-            <div className="header-content">
-                <img className="header-title" onClick={onTitleClick} src={MovieIcon} alt="Movie Phobics Icon" />
+            <div className="header-content" onClick={onTitleClick}>
+                <h2>MOVIE PHOBICS</h2>
             </div>
             <div className="header-right">
-                <div className="search-container">
-                    {
-                        <input
-                            type="text"
-                            placeholder="Search Movie..."
-                            value={searchQuery}
-                            onChange={onSearchChange}
-                            className="search-input"
-                        />
-                    }
-
-                </div>
+                <FontAwesomeIcon className='icon' icon={faUser} size="2x" />
+                <FontAwesomeIcon
+                    className='icon'
+                    icon={isSearchVisible ? faTimes : faSearch}
+                    size="2x"
+                    onClick={toggleSearch}
+                />
             </div>
         </header>
     );

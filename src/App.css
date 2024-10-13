@@ -1,5 +1,43 @@
-/* src/App.css */
 .app {
   text-align: center;
-  font-family: Arial, sans-serif;
+  font-family: "Abeezee", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scrollable {
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
+  padding-right: 5px;
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #07334b;
+  border-radius: 10px;
+}
+
+.scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: #07334b #f1f1f1;
+}
+
+@media (max-width: 768px) {
+  .scrollable::-webkit-scrollbar {
+    width: 2px;
+  }
+
+  .scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #07334b #f1f1f1;
+  }
 }

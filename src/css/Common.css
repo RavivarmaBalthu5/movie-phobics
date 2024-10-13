@@ -1,0 +1,81 @@
+.button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  background: #07334b;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Abeezee", Arial, sans-serif;
+  letter-spacing: 1px;
+}
+.button:hover {
+  background: #07334b;
+  transform: translateY(-2px);
+}
+select {
+  font-family: "Abeezee", Arial, sans-serif;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  transition: border-color 0.3s ease;
+  background: 0.3s ease;
+}
+
+select:hover {
+  border-color: #07334b;
+}
+
+select:focus {
+  outline: none;
+  border-color: #07334b;
+  box-shadow: 0 0 5px rgba(28, 146, 210, 0.5);
+}
+
+.search-input {
+  padding: 10px;
+  font-family: "Abeezee", Arial, sans-serif;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  outline: none;
+  width: 91%;
+  transition: border-color 0.3s;
+}
+
+.search-input:focus {
+  border-bottom: 2px solid #07334b;
+}
+
+@media (max-width: 768px) {
+  .button {
+    padding: 6px 12px;
+    font-size: 12px;
+    margin: 5px;
+    flex: 1 1 auto;
+  }
+  .search-input {
+    width: 100%;
+  }
+
+  select {
+    font-family: "Abeezee", Arial, sans-serif;
+    border-radius: 5px;
+    width: 7%;
+    color: #333;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: border-color 0.3s ease;
+    background: 0.3s ease;
+  }
+  select:hover {
+    border-color: none;
+  }
+}

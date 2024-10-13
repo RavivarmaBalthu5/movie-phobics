@@ -1,36 +1,50 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import MoviesSection from './components/MoviesSection';
+import Search from './components/Search';
 import './App.css';
+import './css/Common.css';
 
 const App = () => {
   const [titleClick, setTitleClick] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
 
-  const handleTitleClick = (value) => {
+  const handleTitleClick = () => {
     setSearchQuery('');
-    setTitleClick(value);
+    setTitleClick(true);
   };
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
-    setSearchQuery(event.target.value);
   };
 
-
+  const toggleSearch = () => {
+    setIsSearchVisible((prev) => !prev);
+  };
 
   return (
     <div className="app">
       <Header
         searchQuery={searchQuery}
         onSearchChange={handleSearchChange}
-        onTitleClick={() => handleTitleClick(true)}
+        onTitleClick={handleTitleClick}
+        toggleSearch={toggleSearch}
+        isSearchVisible={isSearchVisible} // Pass down the state
       />
-      <MoviesSection
-        titleClick={titleClick}
-        handleTitleClick={handleTitleClick}
-        searchQuery={searchQuery}
-      />
+      {isSearchVisible && (
+        <Search
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+        />
+      )}
+      <div className='scrollable'>
+        <MoviesSection
+          titleClick={titleClick}
+          handleTitleClick={handleTitleClick}
+          searchQuery={searchQuery}
+        />
+      </div>
     </div>
   );
 };

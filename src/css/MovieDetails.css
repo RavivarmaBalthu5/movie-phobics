@@ -106,6 +106,7 @@ body.modal-open {
 @media (max-width: 1024px) {
   .modal-content {
     max-width: 90%;
+    margin-top: 10%;
   }
 
   .modal-poster {

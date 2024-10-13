@@ -12,6 +12,7 @@ body.modal-open {
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
+  margin-top: 2.9%;
 }
 
 .modal-content {
@@ -102,14 +103,10 @@ body.modal-open {
   justify-content: center;
   margin-bottom: 20px;
 }
-@media (max-width: 2880px) {
-  .modal-overlay {
-    margin-top: 10%;
-  }
-}
+
 @media (max-width: 1024px) {
   .modal-overlay {
-    margin-top: 10%;
+    margin-top: 5%;
   }
   .modal-content {
     max-width: 90%;
@@ -131,7 +128,7 @@ body.modal-open {
 
 @media (max-width: 768px) {
   .modal-overlay {
-    margin-top: 10%;
+    margin-top: 7%;
   }
   .modal-content {
     max-width: 95%;

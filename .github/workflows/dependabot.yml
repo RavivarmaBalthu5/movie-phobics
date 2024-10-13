@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-type: "indirect"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "fix"
+    allow:
+      - dependency-type: "direct"
+        update-type: "security"

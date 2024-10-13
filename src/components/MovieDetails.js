@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../css/MovieDetails.css';
+import '../css/Common.css';
 import { YOUTUBE_BASE_URL } from '../utils/configs';
 import { getImageUrl } from '../utils/utils';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +29,7 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={handleContentClick}>
+            <div className="modal-content scrollable" onClick={handleContentClick}>
                 <button className="modal-close" onClick={onClose}>
                     <FontAwesomeIcon
                         className='icon'

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/MovieCard.css';
 import { getImageUrl } from '../utils/utils';
+import '../css/Common.css';
 
 const MovieCard = ({ movie, onClick }) => {
 

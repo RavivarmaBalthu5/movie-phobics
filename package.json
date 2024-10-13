@@ -3,17 +3,8 @@
   "version": "0.1.1",
   "description": "Provides movie trailers, clips, scenes... ",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/RavivarmaBalthu5/movie-phobics.git"
-  },
   "author": "Ravivarma Balthu",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/RavivarmaBalthu5/movie-phobics/issues"
-  },
-  "homepage": "https://github.com/RavivarmaBalthu5/movie-phobics#readme",
-  "website": "https://moviephobics.netlify.app",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",

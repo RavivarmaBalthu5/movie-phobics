@@ -52,27 +52,6 @@ select:focus {
   border-bottom: 2px solid #07334b;
 }
 
-.scrollable {
-  overflow-y: auto;
-  height: calc(100vh - 60px);
-  padding-right: 5px;
-  scrollbar-width: thin;
-  scrollbar-color: #07334b #f1f1f1;
-}
-
-.scrollable::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scrollable::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.scrollable::-webkit-scrollbar-thumb {
-  background: #07334b;
-  border-radius: 5px;
-}
-
 @media (max-width: 768px) {
   .button {
     padding: 6px 12px;
@@ -98,13 +77,5 @@ select:focus {
   }
   select:hover {
     border-color: none;
-  }
-  .scrollable::-webkit-scrollbar {
-    width: 2px;
-  }
-
-  .scrollable {
-    scrollbar-width: thin;
-    scrollbar-color: #07334b #f1f1f1;
   }
 }

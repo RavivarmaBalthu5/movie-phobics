@@ -4,7 +4,6 @@ import MovieCard from './MovieCard';
 import MovieDetails from './MovieDetails';
 import loadingIcon from '../assets/loading.svg';
 import '../css/MoviesSection.css';
-import '../css/Common.css';
 
 const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     const [movies, setMovies] = useState([]);

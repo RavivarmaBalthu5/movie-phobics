@@ -1,6 +1,6 @@
 {
   "name": "movie-phobics",
-  "version": "2.0.0",
+  "version": "0.1.1",
   "description": "Provides movie trailers, clips, scenes... ",
   "private": true,
   "repository": {

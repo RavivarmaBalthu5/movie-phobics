@@ -66,10 +66,11 @@ body.modal-open {
 
 .modal-title {
   font-size: 24px;
-  margin-bottom: 10px;
+  left: 20px;
 }
-
-.modal-release-date,
+.modal-original-title {
+  margin-top: -10px;
+}
 .modal-vote-average,
 .modal-overview {
   margin-bottom: 10px;
@@ -102,6 +103,11 @@ body.modal-open {
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
+}
+
+.movie-details-rating {
+  margin-top: -92px;
+  margin-left: 335px;
 }
 
 @media (max-width: 1024px) {
@@ -163,5 +169,9 @@ body.modal-open {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+  }
+  .movie-details-rating {
+    margin-top: -92px;
+    margin-left: 320px;
   }
 }

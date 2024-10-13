@@ -66,10 +66,11 @@ body.modal-open {
 
 .modal-title {
   font-size: 24px;
-  margin-bottom: 10px;
+  left: 20px;
 }
-
-.modal-release-date,
+.modal-original-title {
+  margin-top: -10px;
+}
 .modal-vote-average,
 .modal-overview {
   margin-bottom: 10px;
@@ -104,18 +105,27 @@ body.modal-open {
   margin-bottom: 20px;
 }
 
+.movie-details-rating {
+  margin-top: -92px;
+  margin-left: 335px;
+}
+
+@media (max-width: 1824px) {
+  .movie-details-rating {
+    margin-left: 275px;
+  }
+}
+
+@media (max-width: 1424px) {
+  .movie-details-rating {
+    margin-left: 235px;
+  }
+}
+
 @media (max-width: 1024px) {
   .modal-overlay {
     margin-top: 5%;
   }
-  .modal-content {
-    max-width: 90%;
-  }
-
-  .modal-poster {
-    max-width: 100%;
-  }
-
   .video-container {
     display: block;
   }
@@ -124,32 +134,23 @@ body.modal-open {
     height: 360px;
     padding-bottom: 30px;
   }
+
+  .movie-details-rating {
+    margin-left: 220px;
+  }
 }
 
 @media (max-width: 768px) {
   .modal-overlay {
     margin-top: 7%;
   }
-  .modal-content {
-    max-width: 95%;
-    height: auto;
-  }
 
   .modal-main {
     flex-direction: column;
   }
 
-  .modal-left,
-  .modal-right {
-    width: 100%;
-  }
-
   .modal-left {
     margin-bottom: 20px;
-  }
-
-  .modal-poster {
-    max-width: 100%;
   }
 
   .modal-close {
@@ -163,5 +164,26 @@ body.modal-open {
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+  }
+  .movie-details-rating {
+    margin-left: 375px;
+  }
+}
+
+@media (max-width: 700px) {
+  .movie-details-rating {
+    margin-left: 335px;
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-details-rating {
+    margin-left: 305px;
+  }
+}
+
+@media (max-width: 500px) {
+  .movie-details-rating {
+    margin-left: 280px;
   }
 }

@@ -109,6 +109,17 @@ body.modal-open {
   margin-top: -92px;
   margin-left: 335px;
 }
+@media (max-width: 1824px) {
+  .movie-details-rating {
+    margin-left: 275px;
+  }
+}
+
+@media (max-width: 1424px) {
+  .movie-details-rating {
+    margin-left: 235px;
+  }
+}
 
 @media (max-width: 1024px) {
   .modal-overlay {
@@ -129,6 +140,10 @@ body.modal-open {
   .video-item iframe {
     height: 360px;
     padding-bottom: 30px;
+  }
+
+  .movie-details-rating {
+    margin-left: 405px;
   }
 }
 
@@ -171,7 +186,6 @@ body.modal-open {
     margin: 0 auto;
   }
   .movie-details-rating {
-    margin-top: -92px;
-    margin-left: 320px;
+    margin-left: 385px;
   }
 }

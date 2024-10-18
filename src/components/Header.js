@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Header = ({ onTitleClick, toggleSearch, isSearchVisible }) => {
     return (
@@ -14,7 +14,7 @@ const Header = ({ onTitleClick, toggleSearch, isSearchVisible }) => {
                 <FontAwesomeIcon className='icon' icon={faUser} size="2x" />
                 <FontAwesomeIcon
                     className='icon'
-                    icon={isSearchVisible ? faTimes : faSearch}
+                    icon={faSearch}
                     size="2x"
                     onClick={toggleSearch}
                 />

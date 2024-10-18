@@ -14,7 +14,7 @@ const Header = ({ onTitleClick, toggleSearch, isSearchVisible }) => {
                 <FontAwesomeIcon className='icon' icon={faUser} size="2x" />
                 <FontAwesomeIcon
                     className='icon'
-                    icon={isSearchVisible ? faTimes : faSearch}
+                    icon={faSearch}
                     size="2x"
                     onClick={toggleSearch}
                 />

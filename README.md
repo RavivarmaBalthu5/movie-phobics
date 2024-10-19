@@ -10,8 +10,7 @@
 - **Watch Clips and Scenes**: Access a wide variety of clips and scenes from different movies.
 - **Responsive Design**: Enjoy a seamless experience on both desktop and mobile devices.
 - **User-Friendly Interface**: Navigate effortlessly through a clean and modern UI.
-- **Search Functionality**: Quickly find movies by title or genre.
-- **Favorites**: Save your favorite trailers for quick access.
+- **Search Functionality**: Quickly find movies by title 
 
 ## Technologies Used
 
@@ -19,7 +18,6 @@
 - **React Router**: For handling routing and navigation within the app.
 - **Axios**: For making HTTP requests to fetch movie data.
 - **Font Awesome**: Icon library for scalable vector icons.
-- **React Testing Library**: For testing React components.
 
 ## Getting Started
 

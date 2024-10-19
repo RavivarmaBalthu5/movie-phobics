@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header/Header';
 import MoviesSection from './components/Movies/MoviesSection';
 import Search from './components/Header/Search';
@@ -10,21 +10,6 @@ const App = () => {
   const [titleClick, setTitleClick] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [isMobileView, setIsMobileView] = useState(false);
-  const checkViewport = () => {
-    if (window.innerWidth < 600) {
-      setIsMobileView(true);
-    } else {
-      setIsMobileView(false);
-    }
-  };
-  useEffect(() => {
-    checkViewport();
-    window.addEventListener('resize', checkViewport);
-    return () => {
-      window.removeEventListener('resize', checkViewport);
-    };
-  }, []);
   const handleTitleClick = () => {
     setSearchQuery('');
     setTitleClick(true);
@@ -50,18 +35,13 @@ const App = () => {
           onSearchChange={handleSearchChange}
         />
       )}
-      {isMobileView ? (
-        <div className="desktop-message">
-          Please view this page in desktop mode.
-        </div>
-      ) : (
-        <div className='scrollable'>
-          <MoviesSection
-            titleClick={titleClick}
-            handleTitleClick={handleTitleClick}
-            searchQuery={searchQuery}
-          />
-        </div>)}
+      <div className='scrollable'>
+        <MoviesSection
+          titleClick={titleClick}
+          handleTitleClick={handleTitleClick}
+          searchQuery={searchQuery}
+        />
+      </div>
       <Footer />
     </div>
   );

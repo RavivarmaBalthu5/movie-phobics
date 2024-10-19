@@ -1,8 +1,9 @@
 import { GITHUB_URL, NETLIFY_API_URL } from "../utils/configs";
+import { getNetlifyUrl } from "../utils/utils";
 
 export const fetchMovies = async (query) => {
     try {
-        const response = await fetch(`${NETLIFY_API_URL}?movie=${encodeURIComponent(query)}`);
+        const response = await fetch(`${getNetlifyUrl()}?movie=${encodeURIComponent(query)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -16,7 +17,7 @@ export const fetchMovies = async (query) => {
 
 export const fetchMoviesWithPage = async (query) => {
     try {
-        const response = await fetch(`${NETLIFY_API_URL}?now_playing_current_page=${encodeURIComponent(query)}`);
+        const response = await fetch(`${getNetlifyUrl()}?now_playing_current_page=${encodeURIComponent(query)}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -30,7 +31,7 @@ export const fetchMoviesWithPage = async (query) => {
 
 export const fetchTotalPages = async () => {
     try {
-        const response = await fetch(`${NETLIFY_API_URL}?now_playing_total_pages=${true}`);
+        const response = await fetch(`${getNetlifyUrl()}?now_playing_total_pages=${true}`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

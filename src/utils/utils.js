@@ -1,4 +1,4 @@
-const { DEFAULT_IMG_URL, IMG_BASE_URL } = require("./configs");
+const { DEFAULT_IMG_URL, IMG_BASE_URL, DEV_NETLIFY_API_URL, NETLIFY_API_URL } = require("./configs");
 
 const fetchWithRetry = async (fetchFunction, query, retries = 3) => {
     let attempt = 0;
@@ -43,6 +43,7 @@ const formatReleaseDate = (dateString) => {
 
     return `${monthYear.split(' ')[0]} ${day}${ordinalSuffix(day)}, ${monthYear.split(' ')[2]}`;
 };
+
 const getYearFromDate = (dateString) => {
     const date = new Date(dateString);
 
@@ -54,10 +55,16 @@ const getYearFromDate = (dateString) => {
 };
 
 
-
+const getNetlifyUrl = () => {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'localhost') {
+        return DEV_NETLIFY_API_URL
+    }
+    return NETLIFY_API_URL
+}
 module.exports = {
     fetchWithRetry,
     getImageUrl,
     formatReleaseDate,
-    getYearFromDate
+    getYearFromDate,
+    getNetlifyUrl
 }

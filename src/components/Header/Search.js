@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '../../css/Common.css';
 
-const Search = ({ searchQuery, onSearchChange }) => {
+const Search = ({ searchQuery, onSearchChange, toggleSearch }) => {
     const handleClear = () => {
         onSearchChange({ target: { value: '' } });
+        toggleSearch()
     };
 
     return (
@@ -17,14 +18,12 @@ const Search = ({ searchQuery, onSearchChange }) => {
                 onChange={onSearchChange}
                 className="search-input"
             />
-            {searchQuery && (
-                <FontAwesomeIcon
-                    icon={faTimes}
-                    size="lg"
-                    onClick={handleClear}
-                    className="clear-icon"
-                />
-            )}
+            <FontAwesomeIcon
+                icon={faTimes}
+                size="lg"
+                onClick={handleClear}
+                className="clear-icon"
+            />
         </div>
     );
 };

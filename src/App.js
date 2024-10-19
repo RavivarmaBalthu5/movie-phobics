@@ -10,9 +10,9 @@ const App = () => {
   const [titleClick, setTitleClick] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const handleTitleClick = () => {
+  const handleTitleClick = (titleState) => {
     setSearchQuery('');
-    setTitleClick(true);
+    setTitleClick(titleState);
   };
 
   const handleSearchChange = (event) => {
@@ -33,6 +33,7 @@ const App = () => {
         <Search
           searchQuery={searchQuery}
           onSearchChange={handleSearchChange}
+          toggleSearch={toggleSearch}
         />
       )}
       <div className='scrollable'>

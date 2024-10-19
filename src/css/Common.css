@@ -44,7 +44,7 @@ select:focus {
   border: none;
   border-bottom: 1px solid #ccc;
   outline: none;
-  width: 91%;
+  width: 80%;
   transition: border-color 0.3s;
 }
 
@@ -73,6 +73,24 @@ select:focus {
   border-radius: 5px;
 }
 
+.search-container {
+  position: relative;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  transition: color 0.3s;
+}
+
+.clear-icon:hover {
+  color: #07334b;
+}
+
 @media (max-width: 768px) {
   .button {
     padding: 6px 12px;
@@ -81,7 +99,7 @@ select:focus {
     flex: 1 1 auto;
   }
   .search-input {
-    width: 100%;
+    width: 80%;
   }
 
   select {

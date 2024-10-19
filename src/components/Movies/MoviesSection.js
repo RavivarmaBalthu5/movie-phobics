@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovies, fetchMoviesWithPage, fetchTotalPages, fetchVideos } from '../services/movieService';
+import { fetchMovies, fetchMoviesWithPage, fetchTotalPages, fetchVideos } from '../../services/movieService';
 import MovieCard from './MovieCard';
 import MovieDetails from './MovieDetails';
-import loadingIcon from '../assets/loading.svg';
-import '../css/MoviesSection.css';
-import '../css/Common.css';
+import loadingIcon from '../../assets/loading.svg';
+import '../../css/MoviesSection.css';
+import '../../css/Common.css';
 
 const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     const [movies, setMovies] = useState([]);
@@ -24,17 +24,17 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                 console.error(e);
             }
         };
-
         getTotalPages();
     }, []);
+
     useEffect(() => {
         const getMovies = async () => {
             setLoading(true);
             try {
                 if (searchQuery.trim() === '') {
-                    setMovies(await fetchMoviesWithPage(currentPage))
+                    setMovies(await fetchMoviesWithPage(currentPage));
                 } else {
-                    setMovies(await fetchMovies(searchQuery))
+                    setMovies(await fetchMovies(searchQuery));
                 }
             } catch (e) {
                 console.error(e);
@@ -47,6 +47,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
             handleTitleClick(false);
         }
     }, [titleClick, searchQuery, handleTitleClick, currentPage]);
+
     const handleOpenMovieDetails = async (movie) => {
         setLoading(true);
         try {
@@ -68,12 +69,17 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
     };
 
     const handleNextPage = () => {
-        setCurrentPage(prevPage => prevPage + 1);
+        if (currentPage < totalPages) {
+            setCurrentPage((prevPage) => prevPage + 1);
+        }
     };
 
     const handlePrevPage = () => {
-        setCurrentPage(prevPage => (prevPage > 1 ? prevPage - 1 : 1));
+        if (currentPage > 1) {
+            setCurrentPage((prevPage) => prevPage - 1);
+        }
     };
+
     const handlePageChange = (event) => {
         setCurrentPage(Number(event.target.value));
     };
@@ -84,14 +90,17 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                 {loading ? (
                     <img src={loadingIcon} alt="loading" className="movie-loading" />
                 ) : (
-                    movies.length > 0 ?
+                    movies.length > 0 ? (
                         movies.map((movie) => (
                             <MovieCard
                                 key={movie.id}
                                 movie={movie}
                                 onClick={() => handleOpenMovieDetails(movie)}
                             />
-                        )) : <img src={loadingIcon} alt="loading" className="movie-loading" />
+                        ))
+                    ) : (
+                        <img src={loadingIcon} alt="loading" className="movie-loading" />
+                    )
                 )}
                 {isDetailsOpen && selectedMovie && (
                     <MovieDetails
@@ -102,7 +111,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                     />
                 )}
             </div>
-            {(searchQuery === '') && (
+            {searchQuery === '' && (
                 <div className="pagination">
                     <button onClick={handlePrevPage} disabled={currentPage === 1} className='button'>
                         Previous
@@ -117,7 +126,8 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                     <button onClick={handleNextPage} disabled={totalPages === currentPage} className='button'>
                         Next
                     </button>
-                </div>)}
+                </div>
+            )}
         </div>
     );
 };

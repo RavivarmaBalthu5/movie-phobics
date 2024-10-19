@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Rating.css';
+import '../../css/Rating.css';
 
 const Rating = ({ rating }) => {
     const percentage = (rating / 10) * 100;

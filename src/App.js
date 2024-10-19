@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header/Header';
-import MoviesSection from './components/MoviesSection';
+import MoviesSection from './components/Movies/MoviesSection';
 import Search from './components/Header/Search';
 import './App.css';
 import './css/Common.css';

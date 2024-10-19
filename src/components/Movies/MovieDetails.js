@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import '../css/MovieDetails.css';
-import '../css/Common.css';
-import { YOUTUBE_BASE_URL } from '../utils/configs';
-import { getImageUrl, getYearFromDate } from '../utils/utils';
+import '../../css/MovieDetails.css';
+import '../../css/Common.css';
+import { YOUTUBE_BASE_URL } from '../../utils/configs';
+import { getImageUrl, getYearFromDate } from '../../utils/utils';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Rating from './Rating';
+import Rating from '../Common/Rating';
 
 const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     const [filter, setFilter] = useState('');

@@ -56,7 +56,7 @@ const getYearFromDate = (dateString) => {
 
 
 const getNetlifyUrl = () => {
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'localhost') {
+    if (window.location.href.includes("dev") || window.location.href.includes("localhost")) {
         return DEV_NETLIFY_API_URL
     }
     return NETLIFY_API_URL

@@ -15,11 +15,13 @@
 
 .movie-card-image-container {
   position: relative;
+  height: 100%; /* Ensure the container takes the full height */
 }
 
 .movie-card-image {
   width: 100%;
-  object-fit: cover;
+  height: 100%; /* Fill the height of the card */
+  object-fit: cover; /* Cover the area without distorting aspect ratio */
 }
 
 .movie-card-overlay {

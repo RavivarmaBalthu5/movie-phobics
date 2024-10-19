@@ -6,3 +6,9 @@
   height: 100vh;
   overflow: hidden;
 }
+.desktopMessage {
+  background-color: "#ffcccc";
+  color: "#333";
+  padding: "20px";
+  text-align: "center";
+}

@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
-import Header from './components/Header';
+import React, { useEffect, useState } from 'react';
+import Header from './components/Header/Header';
 import MoviesSection from './components/MoviesSection';
-import Search from './components/Search';
+import Search from './components/Header/Search';
 import './App.css';
 import './css/Common.css';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
   const [titleClick, setTitleClick] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-
+  const [isMobileView, setIsMobileView] = useState(false);
+  const checkViewport = () => {
+    if (window.innerWidth < 600) {
+      setIsMobileView(true);
+    } else {
+      setIsMobileView(false);
+    }
+  };
+  useEffect(() => {
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => {
+      window.removeEventListener('resize', checkViewport);
+    };
+  }, []);
   const handleTitleClick = () => {
     setSearchQuery('');
     setTitleClick(true);
@@ -26,11 +41,8 @@ const App = () => {
   return (
     <div className="app">
       <Header
-        searchQuery={searchQuery}
-        onSearchChange={handleSearchChange}
         onTitleClick={handleTitleClick}
         toggleSearch={toggleSearch}
-        isSearchVisible={isSearchVisible} // Pass down the state
       />
       {isSearchVisible && (
         <Search
@@ -38,13 +50,19 @@ const App = () => {
           onSearchChange={handleSearchChange}
         />
       )}
-      <div className='scrollable'>
-        <MoviesSection
-          titleClick={titleClick}
-          handleTitleClick={handleTitleClick}
-          searchQuery={searchQuery}
-        />
-      </div>
+      {isMobileView ? (
+        <div className="desktop-message">
+          Please view this page in desktop mode.
+        </div>
+      ) : (
+        <div className='scrollable'>
+          <MoviesSection
+            titleClick={titleClick}
+            handleTitleClick={handleTitleClick}
+            searchQuery={searchQuery}
+          />
+        </div>)}
+      <Footer />
     </div>
   );
 };

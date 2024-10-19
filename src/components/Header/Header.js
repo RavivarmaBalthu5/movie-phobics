@@ -1,10 +1,10 @@
 import React from 'react';
-import '../css/Header.css';
+import '../../css/Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Header = ({ onTitleClick, toggleSearch, isSearchVisible }) => {
+const Header = ({ toggleSearch, onTitleClick }) => {
     return (
         <header className="header">
             <div className="header-content" onClick={onTitleClick}>

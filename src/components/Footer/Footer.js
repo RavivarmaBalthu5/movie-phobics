@@ -22,7 +22,7 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer-details">
                 <p>© 2024 Movie Phobics. All rights reserved. {version}</p>
-                <p>For any issues, Please Report here : <a href={GITHUB_URL_ISSUES} target='_blank' rel="noreferrer">
+                <p>For any issues, please report here : <a href={GITHUB_URL_ISSUES} target='_blank' rel="noreferrer">
                     <FontAwesomeIcon className='icon' icon={faGithub} />
                 </a>
                 </p>

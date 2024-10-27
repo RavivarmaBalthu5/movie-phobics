@@ -10,7 +10,7 @@
 - **Watch Clips and Scenes**: Access a wide variety of clips and scenes from different movies.
 - **Responsive Design**: Enjoy a seamless experience on both desktop and mobile devices.
 - **User-Friendly Interface**: Navigate effortlessly through a clean and modern UI.
-- **Search Functionality**: Quickly find movies by title 
+- **Search Functionality**: Quickly find movies by title
 
 ## Technologies Used
 
@@ -32,3 +32,44 @@ Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.co
 1. Clone the repository:
    ```bash
    git clone https://github.com/RavivarmaBalthu5/movie-phobics.git
+   cd movie-phobics
+   ```
+2. Install Dependencies
+
+   Use npm to install all project dependencies:
+
+   ```bash
+   npm install
+   ```
+   
+   3. Start Locally
+   
+   To start the local server:
+   
+   ```bash
+   npm start
+   ```
+   
+   This will start the server at http://localhost:3000.
+
+## Contributing
+
+Contributions are welcome! Please follow these steps to contribute:
+
+- Fork the repository.
+- Create a new branch (git checkout -b feature-branch).
+- Commit your changes (git commit -m 'Add new feature').
+- Push to the branch (git push origin feature-branch).
+- Open a pull request.
+
+## Reporting Bugs
+
+To report a bug, [open an issue on GitHub](https://github.com/RavivarmaBalthu5/movie-phobics/issues).
+
+## Request Features
+
+To request a feature, please [open a feature request](https://github.com/RavivarmaBalthu5/movie-phobics/issues).
+
+## License
+
+This project is licensed under the [ISC License](https://opensource.org/licenses/ISC).

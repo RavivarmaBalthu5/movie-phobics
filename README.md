@@ -69,7 +69,3 @@ To report a bug, [open an issue on GitHub](https://github.com/RavivarmaBalthu5/m
 ## Request Features
 
 To request a feature, please [open a feature request](https://github.com/RavivarmaBalthu5/movie-phobics/issues).
-
-## License
-
-This project is licensed under the [ISC License](https://opensource.org/licenses/ISC).

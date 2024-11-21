@@ -5,7 +5,7 @@ import { YOUTUBE_BASE_URL } from '../../utils/configs';
 import { getImageUrl, getYearFromDate } from '../../utils/utils';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Rating from '../Common/Rating';
+// import Rating from '../Common/Rating';
 
 const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
     const [filter, setFilter] = useState('');
@@ -44,9 +44,9 @@ const MovieDetails = ({ isOpen, onClose, movie, videos }) => {
                             alt={movie?.title}
                             className="modal-poster"
                         />
-                        <div className="movie-details-rating">
+                        {/* <div className="movie-details-rating">
                             <Rating rating={Number(movie?.vote_average)} />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="modal-right">
                         <h2 className="modal-title">{movie?.title} ({getYearFromDate(movie?.release_date)})</h2>

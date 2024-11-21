@@ -1,7 +1,7 @@
 .header {
   background: #012031;
   color: white;
-  padding: 10px 70px;
+  padding: 5px 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +10,14 @@
   z-index: 1000;
 }
 
+.header-content {
+  display: flex;
+}
+
+.header-content img {
+  width: 7%;
+  height: 7%;
+}
 .header-content h2 {
   background: #012031;
   background: -webkit-linear-gradient(to right, #f2fcfe, #1c92d2);
@@ -17,10 +25,11 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 2em;
+  font-size: 1.5em;
   margin: 0;
   text-align: center;
   cursor: pointer;
+  padding-top: 1.3%;
 }
 
 .header-right {
@@ -36,10 +45,19 @@
 @media (max-width: 768px) {
   .header {
     flex-direction: row;
-    padding: 10px;
+    padding: 6px;
   }
 
   .header-content h2 {
     padding-left: 0px;
+  }
+
+  .header-content img {
+    width: 9%;
+    height: 9%;
+  }
+  .header-right .icon {
+    padding-right: 5px;
+    cursor: pointer;
   }
 }

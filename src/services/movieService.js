@@ -7,7 +7,6 @@ export const fetchMovies = async (query) => {
     const cacheKey = `movies:${query}`;
     const cachedData = myCache.get(cacheKey);
     if (cachedData) {
-        console.log('Returning cached result for movies:', query);
         return cachedData;
     }
 
@@ -112,5 +111,23 @@ export const fetchGitVersion = async () => {
     } catch (error) {
         console.error('Error fetching git version:', error);
         return "v1.0.0";
+    }
+};
+
+export const fetchMovieDetail = async (movieId) => {
+    const cacheKey = `movieId:${movieId}`;
+    const cachedData = myCache.get(cacheKey);
+    if (cachedData) {
+        return cachedData;
+    }
+
+    try {
+        const response = await fetch(`${getNetlifyUrl()}?movieId=${encodeURIComponent(movieId)}`);
+        const data = await response.json();
+        myCache.set(cacheKey, data, 300);
+        return data[0];
+    } catch (error) {
+        console.error('Error fetching movie:', error);
+        return { results: {} };
     }
 };

@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/moviephobics.png';
 
-const Header = ({ toggleSearch }) => {
+const Header = ({ toggleSearch, setSearchQuery }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const isHomePage = location.pathname === '/';
     const onTitleClick = () => {
+        setSearchQuery('');
         navigate('/');
     };
 

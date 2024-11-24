@@ -23,7 +23,7 @@ const Layout = ({ children }) => {
 
     return (
         <div className="app">
-            <Header toggleSearch={toggleSearch} />
+            <Header toggleSearch={toggleSearch} setSearchQuery={setSearchQuery} />
             {isSearchVisible && (
                 <Search
                     searchQuery={searchQuery}

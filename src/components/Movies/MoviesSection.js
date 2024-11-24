@@ -6,7 +6,7 @@ import loadingIcon from '../../assets/loading.svg';
 import '../../css/MoviesSection.css';
 import '../../css/Common.css';
 
-const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
+const MoviesSection = ({ searchQuery, toggleSearch, isSearchVisible }) => {
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(1);
@@ -41,12 +41,12 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
             }
         };
         getMovies();
-        if (titleClick) {
-            handleTitleClick(false);
-        }
-    }, [titleClick, searchQuery, handleTitleClick, currentPage]);
+    }, [searchQuery, currentPage]);
 
     const handleMovieClick = (movie) => {
+        if (isSearchVisible) {
+            toggleSearch();
+        }
         navigate(`/movies/${movie.id}`);
     };
 
@@ -77,7 +77,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                             <MovieCard
                                 key={movie.id}
                                 movie={movie}
-                                onClick={() => handleMovieClick(movie)} // Navigate on click
+                                onClick={() => handleMovieClick(movie)}
                             />
                         ))
                     ) : (

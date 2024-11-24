@@ -1,24 +1,32 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/moviephobics.png';
 
-const Header = ({ toggleSearch, onTitleClick }) => {
+const Header = ({ toggleSearch, setSearchQuery }) => {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isHomePage = location.pathname === '/';
+    const onTitleClick = () => {
+        setSearchQuery('');
+        navigate('/');
+    };
+
     return (
         <header className="header">
             <div className="header-content" onClick={onTitleClick}>
-                <img src={logo} alt="moviephobics logo" className='logo' />
+                <img src={logo} alt="moviephobics logo" className="logo" />
                 <h2>MOVIE PHOBICS</h2>
             </div>
             <div className="header-right">
-                {/* <FontAwesomeIcon className='icon' icon={faUser} size="2x" /> */}
                 <FontAwesomeIcon
-                    className='icon'
+                    className="icon"
                     icon={faSearch}
                     size="2x"
-                    onClick={toggleSearch}
+                    onClick={isHomePage ? toggleSearch : null}
+                    style={{ cursor: isHomePage ? 'pointer' : 'not-allowed', opacity: isHomePage ? 1 : 0.5 }}
                 />
             </div>
         </header>

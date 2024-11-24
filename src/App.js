@@ -1,50 +1,17 @@
-import React, { useState } from 'react';
-import Header from './components/Header/Header';
-import MoviesSection from './components/Movies/MoviesSection';
-import Search from './components/Header/Search';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Layout from './layout/Layout';
+import AppRoutes from './routes/AppRoutes';
 import './App.css';
 import './css/Common.css';
-import Footer from './components/Footer/Footer';
 
 const App = () => {
-  const [titleClick, setTitleClick] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const handleTitleClick = (titleState) => {
-    setSearchQuery('');
-    setTitleClick(titleState);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const toggleSearch = () => {
-    setIsSearchVisible((prev) => !prev);
-  };
-
   return (
-    <div className="app">
-      <Header
-        onTitleClick={handleTitleClick}
-        toggleSearch={toggleSearch}
-      />
-      {isSearchVisible && (
-        <Search
-          searchQuery={searchQuery}
-          onSearchChange={handleSearchChange}
-          toggleSearch={toggleSearch}
-        />
-      )}
-      <div className='scrollable'>
-        <MoviesSection
-          titleClick={titleClick}
-          handleTitleClick={handleTitleClick}
-          searchQuery={searchQuery}
-        />
-      </div>
-      <Footer />
-    </div>
+    <Router>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </Router>
   );
 };
 

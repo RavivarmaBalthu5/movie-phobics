@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovies, fetchMoviesWithPage, fetchTotalPages, fetchVideos } from '../../services/movieService';
+import { useNavigate } from 'react-router-dom';
+import { fetchMovies, fetchMoviesWithPage, fetchTotalPages } from '../../services/movieService';
 import MovieCard from './MovieCard';
-import MovieDetails from './MovieDetails';
 import loadingIcon from '../../assets/loading.svg';
 import '../../css/MoviesSection.css';
 import '../../css/Common.css';
 
-const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
+const MoviesSection = ({ searchQuery, toggleSearch, isSearchVisible }) => {
     const [movies, setMovies] = useState([]);
-    const [selectedMovie, setSelectedMovie] = useState(null);
-    const [videoData, setVideoData] = useState([]);
-    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getTotalPages = async () => {
@@ -31,7 +29,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
         const getMovies = async () => {
             setLoading(true);
             try {
-                if (searchQuery.trim() === '') {
+                if (!searchQuery) {
                     setMovies(await fetchMoviesWithPage(currentPage));
                 } else {
                     setMovies(await fetchMovies(searchQuery));
@@ -43,29 +41,13 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
             }
         };
         getMovies();
-        if (titleClick) {
-            handleTitleClick(false);
-        }
-    }, [titleClick, searchQuery, handleTitleClick, currentPage]);
+    }, [searchQuery, currentPage]);
 
-    const handleOpenMovieDetails = async (movie) => {
-        setLoading(true);
-        try {
-            const videos = await fetchVideos(movie.id);
-            setVideoData(videos);
-            setIsDetailsOpen(true);
-            setSelectedMovie(movie);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            setLoading(false);
+    const handleMovieClick = (movie) => {
+        if (isSearchVisible) {
+            toggleSearch();
         }
-    };
-
-    const handleCloseDetails = () => {
-        setIsDetailsOpen(false);
-        setSelectedMovie(null);
-        setVideoData([]);
+        navigate(`/movies/${movie.id}`);
     };
 
     const handleNextPage = () => {
@@ -95,25 +77,17 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                             <MovieCard
                                 key={movie.id}
                                 movie={movie}
-                                onClick={() => handleOpenMovieDetails(movie)}
+                                onClick={() => handleMovieClick(movie)}
                             />
                         ))
                     ) : (
                         <img src={loadingIcon} alt="loading" className="movie-loading" />
                     )
                 )}
-                {isDetailsOpen && selectedMovie && (
-                    <MovieDetails
-                        isOpen={isDetailsOpen}
-                        onClose={handleCloseDetails}
-                        movie={selectedMovie}
-                        videos={videoData}
-                    />
-                )}
             </div>
             {searchQuery === '' && (
                 <div className="pagination">
-                    <button onClick={handlePrevPage} disabled={currentPage === 1} className='button'>
+                    <button onClick={handlePrevPage} disabled={currentPage === 1} className="button">
                         Previous
                     </button>
                     <select value={currentPage} onChange={handlePageChange}>
@@ -123,7 +97,7 @@ const MoviesSection = ({ titleClick, handleTitleClick, searchQuery }) => {
                             </option>
                         ))}
                     </select>
-                    <button onClick={handleNextPage} disabled={totalPages === currentPage} className='button'>
+                    <button onClick={handleNextPage} disabled={totalPages === currentPage} className="button">
                         Next
                     </button>
                 </div>

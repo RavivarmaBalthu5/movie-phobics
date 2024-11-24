@@ -3,8 +3,7 @@
   flex-direction: column;
   padding: 30px;
   color: #012031;
-  font-family: "Arial", sans-serif;
-  min-height: 100vh;
+  min-height: 92vh;
   background-image: url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}");
   background-size: cover;
   background-position: center;
@@ -58,7 +57,7 @@
 .movie-right h2 {
   font-size: 28px;
   margin: 0;
-  padding-bottom: 10px;
+  padding: 10px 0px;
   color: #012031;
 }
 

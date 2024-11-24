@@ -1,13 +1,26 @@
-/* MovieDetails.css */
-
 .movie-details-container {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  background-color: #fff;
+  padding: 30px;
   color: #012031;
   font-family: "Arial", sans-serif;
   min-height: 100vh;
+  background-image: url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.movie-details-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1;
 }
 
 .movie-main {
@@ -15,6 +28,8 @@
   flex-wrap: wrap;
   margin-bottom: 30px;
   gap: 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .movie-left {
@@ -36,28 +51,50 @@
   flex-direction: column;
   gap: 10px;
   padding: 10px;
+  background-color: rgba(240, 240, 240, 0.8);
+  border-radius: 10px;
 }
 
 .movie-right h2 {
   font-size: 28px;
   margin: 0;
+  padding-bottom: 10px;
   color: #012031;
 }
 
-.movie-right p {
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 1;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-item strong {
+  font-weight: bold;
+  color: #012031;
+  margin-right: 10px;
+}
+
+.info-item span,
+.info-item p {
+  margin: 0;
   font-size: 16px;
-  line-height: 1.6;
   color: #555;
 }
 
 .movie-videos {
   margin-top: 20px;
+  z-index: 2;
 }
 
 .filter-tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -110,11 +147,30 @@
     align-items: center;
   }
 
+  .movie-left {
+    max-width: 100%;
+  }
+
   .movie-right {
     padding: 0;
+    text-align: center;
+  }
+
+  .movie-right h2 {
+    font-size: 24px;
+  }
+
+  .movie-right p {
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   .filter-tabs {
+    justify-content: center;
     flex-wrap: wrap;
+  }
+
+  .video-list {
+    grid-template-columns: 1fr;
   }
 }

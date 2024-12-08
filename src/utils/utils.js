@@ -105,7 +105,7 @@ const languageMapping = {
     cs: "Czech(Čeština)",
     da: "Danish(Dansk)",
     nl: "Dutch(Nederlands)",
-    en: "English(English)",
+    en: "English",
     eo: "Esperanto(Esperanto)",
     et: "Estonian(Eesti)",
     fi: "Finnish(Suomi)",

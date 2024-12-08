@@ -4,7 +4,7 @@ import '../../css/MovieDetails.css';
 import '../../css/Common.css';
 import { YOUTUBE_BASE_URL } from '../../utils/configs';
 import { fetchMovieDetail, fetchVideos } from '../../services/movieService';
-import { genreMap, getImageUrl, getYearFromDate } from '../../utils/utils';
+import { genreMap, getImageUrl, getYearFromDate, languageMapping } from '../../utils/utils';
 import loadingIcon from '../../assets/loading.svg';
 import _ from 'lodash';
 
@@ -74,7 +74,7 @@ const MovieDetails = () => {
                             <strong>Popularity:</strong> <p>{movie?.popularity}</p>
                         </div>
                         <div className="info-item">
-                            <strong>Original Language:</strong> <p>{movie?.original_language}</p>
+                            <strong>Original Language:</strong> <p>{languageMapping[movie?.original_language]}</p>
                         </div>
                     </div>
                     <div className="filter-tabs">

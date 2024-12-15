@@ -12,12 +12,11 @@ on:
   workflow_dispatch:
     inputs:
       release_version:
-        description: 'Release version to be used'
+        description: "Release version to be used"
         required: true
-        default: 'v1.0.0'
+        default: "v1.0.0"
   release:
     types: [published]
-
 
 jobs:
   build:
@@ -28,7 +27,7 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        
+
   deploy_dev:
     needs: build
     if: startsWith(github.ref, 'refs/heads/feature') || github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && github.event.inputs.release_version)
@@ -39,14 +38,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Checkout specific release tag
         if: github.event_name == 'workflow_dispatch'
         run: |
           git fetch --tags
           git checkout ${{ github.event.inputs.release_version }}
-          
+
       - name: Deploying to Dev
         run: echo "Deploying to Dev..."
 
@@ -64,7 +63,7 @@ jobs:
           npx netlify-cli deploy --alias dev --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
       - name: Deployed to Dev
         run: echo "Deployed to Dev..."
-        
+
   create_release_version:
     needs: deploy_dev
     if: github.ref == 'refs/heads/main' && success() && github.event_name != 'workflow_dispatch'
@@ -129,19 +128,18 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: prod
-      url: https://moviephobics.netlify.app 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0
 
       - name: Checkout specific release tag
         if: github.event_name == 'workflow_dispatch'
         run: |
           git fetch --tags
           git checkout ${{ github.event.inputs.release_version }}
-          
+
       - name: Deploying to Production
         run: echo "Deploying to Production..."
 

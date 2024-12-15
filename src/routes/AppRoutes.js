@@ -7,7 +7,7 @@ const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/" element={<MoviesSection />} />
-            <Route path="/movies/:id" element={<MovieDetails key={window.location.pathname} />} />
+            <Route path="/movies/:id" element={<MovieDetails />} />
         </Routes>
     );
 };

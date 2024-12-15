@@ -7,6 +7,7 @@ import { fetchMovieDetail, fetchVideos } from '../../services/movieService';
 import { genreMap, getImageUrl, getYearFromDate, languageMapping } from '../../utils/utils';
 import loadingIcon from '../../assets/loading.svg';
 import _ from 'lodash';
+import MovieNotFound from './MovieNotFound';
 
 const MovieDetails = () => {
     const { id } = useParams(); // Get movie ID from the route
@@ -32,7 +33,7 @@ const MovieDetails = () => {
     }, [id]);
 
     if (loading) return <img src={loadingIcon} alt="loading" className="movie-loading" />;
-    if (!movie) return <div>Movie not found</div>;
+    if (!movie) return <MovieNotFound />;
 
     // Handle genres
     const genreNames = movie?.genre_ids?.map((genreId) => {

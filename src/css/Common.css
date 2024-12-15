@@ -136,6 +136,43 @@ select:focus {
   transform: translateY(-2px);
 }
 
+.movie-not-found-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.movie-not-found-title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.movie-not-found-message {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.movie-not-found-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.movie-not-found-button {
+  padding: 10px 20px;
+  background-color: #07334b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.movie-not-found-button:hover {
+  background-color: #07334b;
+  transform: translateY(-2px);
+}
+
 @media (max-width: 768px) {
   .button {
     padding: 6px 12px;

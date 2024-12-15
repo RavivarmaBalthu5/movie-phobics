@@ -14,7 +14,7 @@ const MovieNotFound = () => {
             <h1 className="movie-not-found-title">Movie Not Found</h1>
             <p className="movie-not-found-message">Sorry, we couldn't find the movie you are looking for.</p>
             <div className="movie-not-found-actions">
-                <button onClick={goHome} className="movie-not-found-button">Go to Homepage</button>
+                <button onClick={goHome} className="button">Go to Homepage</button>
             </div>
         </div>
     );

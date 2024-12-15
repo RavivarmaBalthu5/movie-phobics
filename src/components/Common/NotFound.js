@@ -18,8 +18,8 @@ const NotFound = () => {
             <h1 className="not-found-title">404 - Page Not Found</h1>
             <p className="not-found-message">Sorry, the page you are looking for does not exist.</p>
             <div className="not-found-actions">
-                <button onClick={goBack} className="not-found-button">Go Back</button>
-                <button onClick={goHome} className="not-found-button">Go to Homepage</button>
+                <button onClick={goBack} className="button">Go Back</button>
+                <button onClick={goHome} className="button">Go to Homepage</button>
             </div>
         </div>
     );

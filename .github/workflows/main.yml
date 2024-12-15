@@ -12,9 +12,9 @@ on:
   workflow_dispatch:
     inputs:
       release_version:
-        description: "Release version to be used"
+        description: 'Release version to be used'
         required: true
-        default: "v1.0.0"
+        default: 'v1.0.0'
   release:
     types: [published]
 

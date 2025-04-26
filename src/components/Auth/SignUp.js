@@ -18,6 +18,7 @@ const Signup = () => {
     const isPasswordValid = Object.values(passwordRules).every(Boolean);
 
     const handleChange = (e) => {
+        setError('');
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 

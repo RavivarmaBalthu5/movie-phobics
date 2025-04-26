@@ -61,3 +61,40 @@
     cursor: pointer;
   }
 }
+
+.profile-menu {
+  position: absolute;
+  right: 10px;
+  top: 60px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  padding: 10px;
+  z-index: 10;
+}
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 5px;
+  font-size: 0.95rem;
+  color: #333;
+  cursor: default;
+}
+
+.profile-item.logout {
+  color: red;
+  cursor: pointer;
+}
+
+.profile-item.logout:hover {
+  background-color: #ffecec;
+}
+
+.profile-icon {
+  min-width: 18px;
+  color: #555;
+}

@@ -1,12 +1,10 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import '../../css/Common.css';
 
 const MovieNotFound = () => {
-    const navigate = useNavigate();
 
     const goHome = () => {
-        navigate('/');  // Navigate to the homepage
+        window.location.href = "/movies"
     };
 
     return (

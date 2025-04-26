@@ -42,6 +42,7 @@ const Signup = () => {
 
             if (response) {
                 setSuccess('Signup successful! Please log in.');
+                localStorage.setItem('user', JSON.stringify(response))
                 window.location.href = '/movies';
             } else {
                 setError('Signup failed');

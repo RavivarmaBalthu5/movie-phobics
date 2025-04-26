@@ -81,12 +81,12 @@
   gap: 10px;
   padding: 8px 5px;
   font-size: 0.95rem;
-  color: #333;
+  color: #012031;
   cursor: default;
 }
 
 .profile-item.logout {
-  color: red;
+  color: 012031;
   cursor: pointer;
 }
 
@@ -96,5 +96,4 @@
 
 .profile-icon {
   min-width: 18px;
-  color: #555;
 }

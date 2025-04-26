@@ -1,17 +1,40 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../../css/Header.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUserCircle, faEnvelope, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import logo from '../../assets/moviephobics.png';
 
 const Header = ({ toggleSearch, setSearchQuery }) => {
     const location = useLocation();
-    const navigate = useNavigate();
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                setUser(JSON.parse(storedUser));
+            } catch {
+                setUser(null);
+            }
+        }
+    }, []);
+
     const isHomePage = location.pathname === '/';
     const onTitleClick = () => {
         setSearchQuery('');
-        navigate('/');
+        localStorage.removeItem('user');
+        window.location.href = "/"
+    };
+
+    const handleProfileClick = () => {
+        setShowProfileMenu(!showProfileMenu);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        window.location.href = "/"
     };
 
     return (
@@ -28,6 +51,30 @@ const Header = ({ toggleSearch, setSearchQuery }) => {
                     onClick={isHomePage ? toggleSearch : null}
                     style={{ cursor: isHomePage ? 'pointer' : 'not-allowed', opacity: isHomePage ? 1 : 0.5 }}
                 />
+                <FontAwesomeIcon
+                    className="icon profile-icon"
+                    icon={faUserCircle}
+                    size="2x"
+                    onClick={handleProfileClick}
+                    style={{ cursor: 'pointer', marginLeft: '20px' }}
+                />
+                {showProfileMenu && user && (
+                    <div className="profile-menu">
+                        <div className="profile-item">
+                            <FontAwesomeIcon icon={faEnvelope} className="profile-icon" />
+                            <span>{user?.email}</span>
+                        </div>
+                        <div className="profile-item">
+                            <FontAwesomeIcon icon={faUser} className="profile-icon" />
+                            <span>{user?.name}</span>
+                        </div>
+                        <div className="profile-item logout" onClick={handleLogout}>
+                            <FontAwesomeIcon icon={faSignOutAlt} className="profile-icon" />
+                            <span>Logout</span>
+                        </div>
+                    </div>
+
+                )}
             </div>
         </header>
     );

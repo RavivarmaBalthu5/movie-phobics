@@ -23,8 +23,7 @@ const Login = () => {
 
             if (response) {
                 setSuccess('Login successful!');
-                console.log(response);
-
+                localStorage.setItem('user', JSON.stringify(response))
                 window.location.href = '/movies';
             } else {
                 setError('Login failed');

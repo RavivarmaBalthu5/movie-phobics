@@ -43,10 +43,12 @@ const Signup = () => {
 
             if (response.status === 200) {
                 setSuccess('Signup successful! Please log in.');
-                localStorage.setItem('user', JSON.stringify({
+                const sessionData = {
                     email: formData.email,
-                    name: formData.name
-                }))
+                    name: formData.name,
+                    loginTime: Date.now()
+                };
+                localStorage.setItem('user', JSON.stringify(sessionData))
                 window.location.href = '/movies';
             } else {
                 setError(response?.data);

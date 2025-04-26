@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
         setSearchQuery(event.target.value);
     };
 
-    const renderMoviesSection = location.pathname === '/' ? (
+    const renderMoviesSection = location.pathname === '/movies' ? (
         <MoviesSection searchQuery={searchQuery} toggleSearch={toggleSearch} isSearchVisible={isSearchVisible} />
     ) : null;
 

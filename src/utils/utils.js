@@ -1,4 +1,4 @@
-const { DEFAULT_IMG_URL, IMG_BASE_URL, DEV_NETLIFY_API_URL, NETLIFY_API_URL } = require("./configs");
+const { DEFAULT_IMG_URL, IMG_BASE_URL, DEV_NETLIFY_API_URL, NETLIFY_API_URL, DEV_NETLIFY_AUTH_API, NETLIFY_AUTH_API } = require("./configs");
 
 const fetchWithRetry = async (fetchFunction, query, retries = 3) => {
     let attempt = 0;
@@ -60,6 +60,12 @@ const getNetlifyUrl = () => {
         return DEV_NETLIFY_API_URL
     }
     return NETLIFY_API_URL
+}
+const getAuthNetlifyUrl = () => {
+    if (window.location.href.includes("dev") || window.location.href.includes("localhost")) {
+        return DEV_NETLIFY_AUTH_API
+    }
+    return NETLIFY_AUTH_API
 }
 const genreMap = {
     28: 'Action',
@@ -202,5 +208,6 @@ module.exports = {
     getYearFromDate,
     getNetlifyUrl,
     genreMap,
-    languageMapping
+    languageMapping,
+    getAuthNetlifyUrl
 }

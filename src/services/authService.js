@@ -17,7 +17,10 @@ export const auth = async (type, email, password, name = null) => {
             },
             body: JSON.stringify(body),
         });
-        return await response.json();
+        return {
+            status: response.status,
+            data: await response.json()
+        }
     } catch (error) {
         console.error('Error while authenticating:', error);
         return "";

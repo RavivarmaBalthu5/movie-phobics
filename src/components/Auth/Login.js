@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../css/Auth.css';
 import { auth } from '../../services/authService';
 
@@ -6,7 +6,27 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                const userData = JSON.parse(storedUser);
+                const { loginTime } = userData;
+                const now = Date.now();
+                const THIRTY_MINUTES = 30 * 60 * 1000;
 
+                if (now - loginTime < THIRTY_MINUTES) {
+                    // Still valid session
+                    window.location.href = '/movies';
+                } else {
+                    // Expired session
+                    localStorage.removeItem('user');
+                }
+            } catch {
+                localStorage.removeItem('user');
+            }
+        }
+    }, []);
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -23,7 +43,11 @@ const Login = () => {
 
             if (response) {
                 setSuccess('Login successful!');
-                localStorage.setItem('user', JSON.stringify(response))
+                const sessionData = {
+                    ...response,
+                    loginTime: Date.now()
+                };
+                localStorage.setItem('user', JSON.stringify(sessionData));
                 window.location.href = '/movies';
             } else {
                 setError('Login failed');

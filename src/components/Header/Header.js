@@ -18,13 +18,15 @@ const Header = ({ toggleSearch, setSearchQuery }) => {
             } catch {
                 setUser(null);
             }
+        } else {
+            setUser(null);
         }
-    }, []);
+    }, [location]);
+
 
     const isHomePage = location.pathname === '/';
     const onTitleClick = () => {
         setSearchQuery('');
-        localStorage.removeItem('user');
         window.location.href = "/"
     };
 

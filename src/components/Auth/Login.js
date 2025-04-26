@@ -28,6 +28,8 @@ const Login = () => {
         }
     }, []);
     const handleChange = (e) => {
+        setError('');
+        setSuccess('')
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -41,16 +43,16 @@ const Login = () => {
         try {
             let response = await auth("login", formData.email, formData.password)
 
-            if (response) {
+            if (response.status === 200) {
                 setSuccess('Login successful!');
                 const sessionData = {
-                    ...response,
+                    ...response.data,
                     loginTime: Date.now()
                 };
                 localStorage.setItem('user', JSON.stringify(sessionData));
                 window.location.href = '/movies';
             } else {
-                setError('Login failed');
+                setError(response.data);
             }
         } catch (err) {
             setError('An error occurred. Please try again later.');

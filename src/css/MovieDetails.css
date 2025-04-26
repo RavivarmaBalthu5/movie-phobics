@@ -4,7 +4,7 @@
   padding: 30px;
   color: #012031;
   min-height: 92vh;
-  background-image: url("https://image.tmdb.org/t/p/original${movie?.backdrop_path}");
+  background-image: url('https://image.tmdb.org/t/p/original${movie?.backdrop_path}');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -12,7 +12,7 @@
 }
 
 .movie-details-container::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -78,12 +78,15 @@
   color: #012031;
   margin-right: 10px;
 }
+.overview {
+  display: inline-block;
+  text-align: left;
+  margin-left: 6px;
+}
 
 .info-item span,
 .info-item p {
   margin: 0;
-  font-size: 16px;
-  color: #555;
 }
 
 .movie-videos {
@@ -151,7 +154,7 @@
   }
 
   .movie-right {
-    padding: 0;
+    padding: 20px;
     text-align: center;
   }
 

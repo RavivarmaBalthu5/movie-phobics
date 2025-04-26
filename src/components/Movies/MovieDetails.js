@@ -60,7 +60,7 @@ const MovieDetails = () => {
                         ({getYearFromDate(movie?.release_date)})</h2>
                     <div className="movie-info">
                         <div className="info-item">
-                            <strong>Overview:</strong><span>{movie?.overview}</span>
+                            <strong>Overview:</strong><span className='overview'>{movie?.overview}</span>
                         </div>
                         <div className="info-item">
                             <strong>Genres:</strong> <span>{!_.isEmpty(genreNames) ? (genreNames)?.join(', ') : 'Unknown'}</span>

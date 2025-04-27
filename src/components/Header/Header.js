@@ -24,10 +24,10 @@ const Header = ({ toggleSearch, setSearchQuery }) => {
     }, [location]);
 
 
-    const isHomePage = location.pathname === '/';
+    const isHomePage = location.pathname === '/movies';
     const onTitleClick = () => {
         setSearchQuery('');
-        window.location.href = "/"
+        window.location.href = "/movies"
     };
 
     const handleProfileClick = () => {

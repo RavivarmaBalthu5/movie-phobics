@@ -19,6 +19,7 @@ const Signup = () => {
 
     const handleChange = (e) => {
         setError('');
+        setSuccess('')
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
@@ -40,12 +41,17 @@ const Signup = () => {
         try {
             const response = await auth('signup', formData.email, formData.password, formData.name);
 
-            if (response) {
+            if (response.status === 200) {
                 setSuccess('Signup successful! Please log in.');
-                localStorage.setItem('user', JSON.stringify(response))
+                const sessionData = {
+                    email: formData.email,
+                    name: formData.name,
+                    loginTime: Date.now()
+                };
+                localStorage.setItem('user', JSON.stringify(sessionData))
                 window.location.href = '/movies';
             } else {
-                setError('Signup failed');
+                setError(response?.data);
             }
         } catch (err) {
             setError('An error occurred. Please try again later.');

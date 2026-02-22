@@ -14,8 +14,7 @@
 
 ## Technologies Used
 
-- **React**: A JavaScript library for building user interfaces.
-- **React Router**: For handling routing and navigation within the app.
+- **Angular**: The primary framework for building the frontend of the application.
 - **Axios**: For making HTTP requests to fetch movie data.
 - **Font Awesome**: Icon library for scalable vector icons.
 
@@ -41,15 +40,15 @@ Make sure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.co
    ```bash
    npm install
    ```
-   
-   3. Start Locally
-   
+
+  3. Start Locally
+
    To start the local server:
-   
+
    ```bash
    npm start
    ```
-   
+
    This will start the server at http://localhost:3000.
 
 ## Contributing

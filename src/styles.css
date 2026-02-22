@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Import all component styles */
+@import 'css/Auth.css';
+@import 'css/Common.css';
+@import 'css/Footer.css';
+@import 'css/Header.css';
+@import 'css/MovieCard.css';
+@import 'css/MovieDetails.css';
+@import 'css/MoviesSection.css';
+@import 'css/Rating.css';
+
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: "ABeeZee", Arial, sans-serif;
+}
+
+code {
+  font-family: "ABeeZee", Arial, sans-serif;
+}
+
+.app {
+  text-align: center;
+  font-family: "ABeeZee", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+

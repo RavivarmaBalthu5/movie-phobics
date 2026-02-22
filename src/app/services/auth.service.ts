@@ -18,14 +18,7 @@ export class AuthService {
 
 
   private getAuthUrl(): string {
-    // For development with proxy, use relative paths
-    // For production, use full URLs from environment
-    if (environment.production) {
-      return environment.netlifyAuthUrl;
-    } else {
-      // Development: use proxy that forwards to netlify
-      return '/.netlify/functions/auth';
-    }
+    return environment.netlifyAuthUrl;
   }
 
   auth(type: 'login' | 'signup', email: string, password: string, name?: string): Observable<AuthResponse> {

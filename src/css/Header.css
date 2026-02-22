@@ -12,14 +12,18 @@
 
 .header-content {
   display: flex;
+  cursor: pointer;
+  align-items: center;
 }
 
 .header-content img {
-  width: 7%;
-  height: 7%;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
+
 .header-content h2 {
-  background: #012031;
   background: -webkit-linear-gradient(to right, #f2fcfe, #1c92d2);
   background: linear-gradient(to right, #f2fcfe, #1c92d2);
   -webkit-background-clip: text;
@@ -27,44 +31,46 @@
   color: transparent;
   font-size: 1.5em;
   margin: 0;
-  text-align: center;
+  line-height: 1;
   cursor: pointer;
-  padding-top: 1.3%;
 }
 
 .header-right {
   display: flex;
   align-items: center;
+  position: relative;
+  gap: 20px;
 }
 
 .header-right .icon {
-  margin-left: 15px;
   cursor: pointer;
+  color: white;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header-right .icon:hover {
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
   .header {
-    flex-direction: row;
-    padding: 6px;
-  }
-
-  .header-content h2 {
-    padding-left: 0px;
+    padding: 6px 16px;
   }
 
   .header-content img {
-    width: 9%;
-    height: 9%;
+    width: 32px;
+    height: 32px;
   }
-  .header-right .icon {
-    padding-right: 5px;
-    cursor: pointer;
+
+  .header-content h2 {
+    font-size: 1.2em;
   }
 }
 
 .profile-menu {
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 60px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -86,7 +92,7 @@
 }
 
 .profile-item.logout {
-  color: 012031;
+  color: #012031;
   cursor: pointer;
 }
 

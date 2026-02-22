@@ -1,0 +1,16 @@
+{
+  "/api": {
+    "target": "https://dev--movie-phobics-apis.netlify.app",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/.netlify/functions"
+    }
+  },
+  "/.netlify": {
+    "target": "https://movie-phobics-apis.netlify.app",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
+

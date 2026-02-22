@@ -14,9 +14,32 @@
   justify-content: center;
 }
 
+.movies-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.movies-section {
+  flex: 1;
+  overflow-y: auto;
+}
+
 .movie-loading {
   width: 100px;
   height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .pagination {
@@ -24,8 +47,16 @@
   align-items: center;
   justify-content: center;
   margin: 20px 0;
+  gap: 10px;
 }
 
 .pagination button:disabled {
   cursor: not-allowed;
 }
+
+.page-info {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+

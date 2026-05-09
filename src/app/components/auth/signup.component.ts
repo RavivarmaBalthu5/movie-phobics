@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { AuthResponse, AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   template: `
     <form (ngSubmit)="handleSubmit()" class="auth-form">
       <h2>Sign Up</h2>
@@ -30,13 +32,24 @@ import { SessionService } from '../../services/session.service';
         pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
       />
       <div *ngIf="emailError" class="error">{{ emailError }}</div>
-      <input
-        type="password"
-        [(ngModel)]="formData.password"
-        name="password"
-        placeholder="Password"
-        required
-      />
+      <div class="password-input-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="formData.password"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <button
+          type="button"
+          class="password-toggle-btn"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          [attr.title]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <fa-icon [icon]="showPassword ? faEyeSlash : faEye" />
+        </button>
+      </div>
       <div class="password-rules">
         <small [class.valid]="passwordRules.minLength">
           Minimum 8 characters
@@ -57,9 +70,12 @@ import { SessionService } from '../../services/session.service';
 })
 export class SignupComponent {
   formData = { name: '', email: '', password: '' };
+  readonly faEye = faEye;
+  readonly faEyeSlash = faEyeSlash;
   error = '';
   success = '';
   emailError = '';
+  showPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -76,6 +92,10 @@ export class SignupComponent {
 
   get isPasswordValid(): boolean {
     return Object.values(this.passwordRules).every((rule) => rule);
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   // ...existing code...

@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
@@ -9,7 +11,7 @@ import { SessionService } from '../../services/session.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FontAwesomeModule],
   template: `
     <form #form="ngForm" (ngSubmit)="handleSubmit(form)" class="auth-form">
       <h2>Login</h2>
@@ -31,14 +33,25 @@ import { SessionService } from '../../services/session.service';
         <span *ngIf="email.errors?.['required']">Email is required.</span>
         <span *ngIf="email.errors?.['pattern']">Please enter a valid email address (e.g., example@domain.com).</span>
       </div>
-      <input
-        type="password"
-        [(ngModel)]="formData.password"
-        #password="ngModel"
-        name="password"
-        placeholder="Password"
-        required
-      />
+      <div class="password-input-wrapper">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="formData.password"
+          #password="ngModel"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <button
+          type="button"
+          class="password-toggle-btn"
+          (click)="togglePasswordVisibility()"
+          [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          [attr.title]="showPassword ? 'Hide password' : 'Show password'"
+        >
+          <fa-icon [icon]="showPassword ? faEyeSlash : faEye" />
+        </button>
+      </div>
       <button type="submit" [disabled]="loading || form.invalid">
         <span *ngIf="loading">Loading...</span>
         <span *ngIf="!loading">Login</span>
@@ -49,9 +62,12 @@ import { SessionService } from '../../services/session.service';
 export class LoginComponent implements OnInit {
   formData = { email: '', password: '' };
   readonly emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/;
+  readonly faEye = faEye;
+  readonly faEyeSlash = faEyeSlash;
   error = '';
   success = '';
   loading = false;
+  showPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -80,6 +96,10 @@ export class LoginComponent implements OnInit {
         localStorage.removeItem('user');
       }
     }
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   handleSubmit(form: NgForm): void {

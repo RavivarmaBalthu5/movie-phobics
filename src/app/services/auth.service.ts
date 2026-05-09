@@ -17,11 +17,6 @@ export class AuthService {
 
 
   private getAuthUrl(): string {
-    // Use relative path for proxy during development
-    // In production, this will use the direct URL
-    if (!environment.production) {
-      return '/api/auth';
-    }
     return environment.netlifyAuthUrl;
   }
 

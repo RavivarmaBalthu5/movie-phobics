@@ -4,14 +4,12 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ElementRef,
-  HostListener,
   AfterViewInit,
   OnDestroy
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { finalize, forkJoin, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { MovieService } from '../../services/movie.service';
 import { SearchService } from '../../services/search.service';
 import { MovieCardComponent } from './movie-card.component';
@@ -25,7 +23,7 @@ import { MovieCardComponent } from './movie-card.component';
       <div *ngIf="loading && movies.length === 0" class="loading-container">
         <img src="assets/loading.svg" alt="loading" class="movie-loading" />
       </div>
-      <div *ngIf="movies.length > 0" class="movie-results" #movieResults>
+      <div *ngIf="movies.length > 0" class="movie-results">
         <app-movie-card
           *ngFor="let movie of movies"
           [movie]="movie"
@@ -45,7 +43,6 @@ import { MovieCardComponent } from './movie-card.component';
   `
 })
 export class MoviesSectionComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('movieResults') movieResults?: ElementRef<HTMLElement>;
   @ViewChild('loadMoreTrigger')
   set loadMoreTrigger(trigger: ElementRef<HTMLElement> | undefined) {
     if (trigger) {
@@ -60,28 +57,29 @@ export class MoviesSectionComponent implements OnInit, AfterViewInit, OnDestroy 
   totalPages = 1;
   currentPage = 0;
   searchQuery = '';
-  private apiPageSize = 20;
-  private gridColumnCount = 1;
-  private readonly visibleRows = 3;
+  private readonly apiPageSize = 40;
   private loadMoreObserver?: IntersectionObserver;
+  private scrollContainer?: HTMLElement;
+  private readonly handleScroll = (): void => {
+    this.loadNextMovieBatchIfNearBottom();
+  };
 
   constructor(
     private movieService: MovieService,
     private searchService: SearchService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private host: ElementRef<HTMLElement>
   ) {}
 
   ngOnInit(): void {
-    this.gridColumnCount = this.estimateGridColumnCount();
-
     this.movieService.fetchTotalPages().subscribe({
       next: (pages) => {
         this.totalPages = Math.max(1, Math.floor(Number(pages) || 1));
         if (!this.searchQuery && this.movies.length === 0 && !this.loading && !this.loadingMore) {
           this.resetMovies();
         } else if (!this.searchQuery) {
-          this.reachedEnd = this.currentPage >= this.totalVisualPages;
+          this.reachedEnd = this.currentPage >= this.totalPages;
         }
       },
       error: (error) => {
@@ -97,48 +95,15 @@ export class MoviesSectionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit(): void {
-    this.updateGridColumnCount();
+    this.scrollContainer =
+      (this.host.nativeElement.closest('.scrollable') as HTMLElement | null) || undefined;
+    this.scrollContainer?.addEventListener('scroll', this.handleScroll, { passive: true });
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {
     this.loadMoreObserver?.disconnect();
-  }
-
-  @HostListener('window:resize')
-  onWindowResize(): void {
-    const previousColumnCount = this.gridColumnCount;
-    this.updateGridColumnCount();
-    if (!this.searchQuery && previousColumnCount !== this.gridColumnCount) {
-      this.resetMovies();
-    }
-  }
-
-  private get visualPageSize(): number {
-    return Math.max(this.gridColumnCount * this.visibleRows, this.gridColumnCount);
-  }
-
-  get totalVisualPages(): number {
-    return Math.max(1, Math.ceil((this.totalPages * this.apiPageSize) / this.visualPageSize));
-  }
-
-  private updateGridColumnCount(): void {
-    if (!this.movieResults?.nativeElement) {
-      this.gridColumnCount = this.estimateGridColumnCount();
-      return;
-    }
-
-    const columns = getComputedStyle(this.movieResults.nativeElement)
-      .gridTemplateColumns
-      .split(' ')
-      .filter(Boolean).length;
-    this.gridColumnCount = Math.max(1, columns);
-  }
-
-  private estimateGridColumnCount(): number {
-    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth || 1200 : 1200;
-    const availableWidth = Math.max(0, Math.min(viewportWidth, 1780) - 56);
-    const minCardWidth = Math.min(Math.max(viewportWidth * 0.1, 170), 210);
-    return Math.max(1, Math.floor((availableWidth + 20) / (minCardWidth + 20)));
+    this.scrollContainer?.removeEventListener('scroll', this.handleScroll);
   }
 
   private normalizeMovies(data: any): any[] {
@@ -167,6 +132,21 @@ export class MoviesSectionComponent implements OnInit, AfterViewInit, OnDestroy 
       { root: null, rootMargin: '700px 0px', threshold: 0.01 }
     );
     this.loadMoreObserver.observe(element);
+  }
+
+  private loadNextMovieBatchIfNearBottom(): void {
+    if (!this.scrollContainer) {
+      return;
+    }
+
+    const remainingScroll =
+      this.scrollContainer.scrollHeight -
+      this.scrollContainer.scrollTop -
+      this.scrollContainer.clientHeight;
+
+    if (remainingScroll < 900) {
+      this.loadNextMovieBatch();
+    }
   }
 
   private loadMovies(): void {
@@ -199,40 +179,36 @@ export class MoviesSectionComponent implements OnInit, AfterViewInit, OnDestroy 
       return;
     }
 
-    const nextVisualPage = this.currentPage + 1;
+    const nextPage = this.currentPage + 1;
     const isInitialLoad = this.movies.length === 0;
     this.loading = isInitialLoad;
     this.loadingMore = !isInitialLoad;
 
-    const visualStartIndex = (nextVisualPage - 1) * this.visualPageSize;
-    const firstApiPage = Math.floor(visualStartIndex / this.apiPageSize) + 1;
-    const startOffset = visualStartIndex % this.apiPageSize;
-    const apiPagesNeeded = Math.ceil((startOffset + this.visualPageSize) / this.apiPageSize);
-    const pageRequests = Array.from({ length: apiPagesNeeded }, (_, index) => {
-      const page = firstApiPage + index;
-      return page <= this.totalPages ? this.movieService.fetchMoviesWithPage(page) : of({ results: [] });
-    });
+    if (nextPage > this.totalPages) {
+      this.loading = false;
+      this.loadingMore = false;
+      this.reachedEnd = true;
+      return;
+    }
 
-    forkJoin(pageRequests)
-      .pipe(
-        map((pages) => pages.flatMap((page) => this.normalizeMovies(page))),
-        finalize(() => {
-          this.loading = false;
-          this.loadingMore = false;
-          this.cdr.detectChanges();
-        })
-      )
+    this.movieService.fetchMoviesWithPage(nextPage)
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.loadingMore = false;
+        this.cdr.detectChanges();
+      }))
       .subscribe({
-        next: (movies) => {
-          const nextMovies = movies.slice(startOffset, startOffset + this.visualPageSize);
+        next: (data) => {
+          const nextMovies = this.normalizeMovies(data);
           const existingIds = new Set(this.movies.map((movie) => movie.id));
           this.movies = [
             ...this.movies,
             ...nextMovies.filter((movie) => !existingIds.has(movie.id))
           ];
-          this.currentPage = nextVisualPage;
-          this.reachedEnd = this.currentPage >= this.totalVisualPages || nextMovies.length === 0;
+          this.currentPage = nextPage;
+          this.reachedEnd = this.currentPage >= this.totalPages;
           this.cdr.detectChanges();
+          setTimeout(() => this.loadNextMovieBatchIfNearBottom());
         },
         error: (error) => {
           console.error('Error fetching movies:', error);

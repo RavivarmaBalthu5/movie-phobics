@@ -143,3 +143,21 @@
   border: 1px solid green;
   border-radius: 5px;
 }
+
+.login-loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  margin: 0 0 10px 0;
+  padding: 0;
+  min-height: unset;
+}
+
+.loading-img {
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}

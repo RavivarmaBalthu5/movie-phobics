@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthResponse, AuthService } from '../../services/auth.service';
 import { SessionService } from '../../services/session.service';
 
 @Component({
@@ -27,7 +27,9 @@ import { SessionService } from '../../services/session.service';
         name="email"
         placeholder="Email"
         required
+        pattern="^[^@\s]+@[^@\s]+\.[^@\s]+$"
       />
+      <div *ngIf="emailError" class="error">{{ emailError }}</div>
       <input
         type="password"
         [(ngModel)]="formData.password"
@@ -57,6 +59,13 @@ export class SignupComponent {
   formData = { name: '', email: '', password: '' };
   error = '';
   success = '';
+  emailError = '';
+
+  constructor(
+    private authService: AuthService,
+    private sessionService: SessionService,
+    private router: Router
+  ) {}
 
   passwordRules = {
     minLength: false,
@@ -69,19 +78,28 @@ export class SignupComponent {
     return Object.values(this.passwordRules).every((rule) => rule);
   }
 
-  constructor(
-    private authService: AuthService,
-    private sessionService: SessionService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.updatePasswordRules();
-  }
+  // ...existing code...
 
   ngDoCheck(): void {
     this.updatePasswordRules();
+    this.validateEmail();
   }
+
+  private validateEmail(): void {
+    if (!this.formData.email) {
+      this.emailError = '';
+      return;
+    }
+
+    const emailPattern = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    if (!emailPattern.test(this.formData.email)) {
+      this.emailError = 'Please enter a valid email address (e.g., example@domain.com).';
+    } else {
+      this.emailError = '';
+    }
+  }
+
+  // ...existing code...
 
   private updatePasswordRules(): void {
     this.passwordRules.minLength = this.formData.password.length >= 8;
@@ -106,7 +124,7 @@ export class SignupComponent {
 
     this.authService.auth('signup', this.formData.email, this.formData.password, this.formData.name)
       .subscribe({
-        next: (response) => {
+        next: (response: AuthResponse) => {
           if (response.status === 200) {
             this.success = 'Signup successful! Please log in.';
             this.sessionService.setUser({
@@ -121,7 +139,7 @@ export class SignupComponent {
             this.error = response.data || 'Signup failed';
           }
         },
-        error: (error) => {
+        error: (error: unknown) => {
           this.error = 'An error occurred. Please try again later.';
           console.error('Signup error:', error);
         }

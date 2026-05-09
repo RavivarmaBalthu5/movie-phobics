@@ -22,7 +22,7 @@ import { SearchService } from '../../services/search.service';
         <img src="assets/moviephobics.png" alt="Movie Phobics" class="logo" />
         <h2>MOVIE PHOBICS</h2>
       </div>
-      <div class="header-right">
+      <div *ngIf="showHeaderActions" class="header-right">
         <fa-icon
           [icon]="faSearch"
           size="2x"
@@ -73,13 +73,27 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.updateRouteState();
+
     this.sessionService.user$.subscribe((user) => {
       this.user = user;
+      if (!user) {
+        this.showProfileMenu = false;
+      }
     });
 
     this.router.events.subscribe(() => {
-      this.isHomePage = this.router.url === '/movies';
+      this.updateRouteState();
+      this.showProfileMenu = false;
     });
+  }
+
+  get showHeaderActions(): boolean {
+    return this.router.url !== '/';
+  }
+
+  private updateRouteState(): void {
+    this.isHomePage = this.router.url === '/movies';
   }
 
   toggleSearch(): void {
@@ -97,7 +111,7 @@ export class HeaderComponent implements OnInit {
 
   onTitleClick(): void {
     this.searchService.setSearchQuery('');
-    this.router.navigate(['/movies']);
+    this.router.navigate([this.user ? '/movies' : '/']);
   }
 }
 

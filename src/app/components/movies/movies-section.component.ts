@@ -109,7 +109,6 @@ export class MoviesSectionComponent implements OnInit {
         }))
         .subscribe({
           next: (data) => {
-            console.log('LoadMovies (search) data received:', data);
             // Handle both array and object responses
             if (Array.isArray(data)) {
               this.movies = data;

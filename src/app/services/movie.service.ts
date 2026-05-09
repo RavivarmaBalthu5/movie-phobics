@@ -16,11 +16,6 @@ export class MovieService {
   constructor(private http: HttpClient) {}
 
   private getApiUrl(): string {
-    // Use relative path for proxy during development
-    // In production, this will use the direct URL
-    if (!environment.production) {
-      return '/api/fetchMovieData';
-    }
     return environment.netlifyApiUrl;
   }
 

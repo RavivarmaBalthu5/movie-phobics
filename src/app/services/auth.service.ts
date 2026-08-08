@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 export interface AuthResponse {
@@ -36,15 +35,7 @@ export class AuthService {
       map((response: any) => ({
         status: response.status || 200,
         data: response
-      })),
-      catchError((error) => {
-        console.error('Error while authenticating:', error);
-        return of({
-          status: error.status || 500,
-          data: error.error || 'Authentication failed'
-        });
-      })
+      }))
     );
   }
 }
-
